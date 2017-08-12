@@ -16,7 +16,7 @@ class wdltoil:
 
     def __init__(self, wdl_filename, *args):
 
-        self.output_file = '/home/lifeisaboutfishtacos/Desktop/wdl-works/wdl03.py'
+        self.output_file = '/home/lifeisaboutfishtacos/Desktop/wdl-works/wdl04.py'
 
         self.module_list = ['from toil.job import Job',
                             'from toil.common import Toil',
@@ -344,7 +344,6 @@ class wdltoil:
         job_section = job_section + '\n        # Output Variables\n'
         for outputs in self.output_var_map:
             for file in self.output_var_map[outputs][0]:
-                print(file)
                 if file[1] == 'File':
                     split_filename = self.output_var_map[outputs][1].split('}')
                     filename = split_filename[-1]
@@ -577,7 +576,7 @@ class wdltoil:
 
                 if left_separator and right_separator:
                     super_array.append(current_var)
-                    subsub_array = cmd_name.strip().split(' ')
+                    subsub_array = self.clean_array(cmd_name)
                     for c in subsub_array:
                         if c != '':
                             sub_array.append("'" + c + "'")
@@ -612,6 +611,31 @@ class wdltoil:
         if current_var != '':
             master_cmd_array.append(current_var)
         return master_cmd_array
+
+    def clean_array(self, cmd_name):
+        append_to_me = []
+        temp_string = ''
+        record_spaces = False
+        for char in cmd_name:
+            if (char != ' ') and (char != '"') and (char != "'"):
+                temp_string = temp_string + char
+            elif (char == ' ') and (record_spaces is False):
+                append_to_me.append(temp_string)
+                temp_string = ''
+            elif (char == ' ') and (record_spaces is True):
+                temp_string = temp_string + char
+            elif char == '"':
+                record_spaces = not record_spaces
+                append_to_me.append(temp_string)
+                temp_string = ''
+            elif char == "'":
+                record_spaces = not record_spaces
+                append_to_me.append(temp_string)
+                temp_string = ''
+            else:
+                pass
+        append_to_me.append(temp_string)
+        return append_to_me
 
     def map_type_to_type(self, job, task_input_variable):
         input_variable_to_write = []

@@ -138,15 +138,13 @@ def hardFilterSNP(job, gatk, gatk_og, refFasta, refFasta_og, refIndex, refIndex_
     command44 = '-V'
     command45 = rawSubset2
     command46 = '--filterExpression'
-    command47 = '"FS'
-    command48 = '>'
-    command49 = '60.0"'
-    command50 = '--filterName'
-    command51 = '"snp_filter"'
-    command52 = '-o'
-    command53 = name + '.filtered.snps.vcf'
+    command47 = 'FS > 60.0'
+    command48 = '--filterName'
+    command49 = 'snp_filter'
+    command50 = '-o'
+    command51 = name + '.filtered.snps.vcf'
 
-    subprocess.check_call([command37, command38, command39, command40, command41, command42, command43, command44, command45, command46, command47, command48, command49, command50, command51, command52, command53])
+    subprocess.check_call([command37, command38, command39, command40, command41, command42, command43, command44, command45, command46, command47, command48, command49, command50, command51])
 
     output_filename3 = name + '.filtered.snps.vcf'
     output_file3 = job.fileStore.writeGlobalFile(output_filename3)
@@ -167,25 +165,23 @@ def hardFilterIndel(job, gatk, gatk_og, refFasta, refFasta_og, refIndex, refInde
     rawSubset3_filepath = os.path.join(tempDir, rawSubset3_og)
     rawSubset3 = job.fileStore.readGlobalFile(rawSubset3, userPath=rawSubset3_filepath)
 
-    command54 = 'java'
-    command55 = '-jar'
-    command56 = gatk
-    command57 = '-T'
-    command58 = 'VariantFiltration'
-    command59 = '-R'
-    command60 = refFasta
-    command61 = '-V'
-    command62 = rawSubset3
-    command63 = '--filterExpression'
-    command64 = '"FS'
-    command65 = '>'
-    command66 = '200.0"'
-    command67 = '--filterName'
-    command68 = '"indel_filter"'
-    command69 = '-o'
-    command70 = name + '.filtered.indels.vcf'
+    command52 = 'java'
+    command53 = '-jar'
+    command54 = gatk
+    command55 = '-T'
+    command56 = 'VariantFiltration'
+    command57 = '-R'
+    command58 = refFasta
+    command59 = '-V'
+    command60 = rawSubset3
+    command61 = '--filterExpression'
+    command62 = 'FS > 200.0'
+    command63 = '--filterName'
+    command64 = 'indel_filter'
+    command65 = '-o'
+    command66 = name + '.filtered.indels.vcf'
 
-    subprocess.check_call([command54, command55, command56, command57, command58, command59, command60, command61, command62, command63, command64, command65, command66, command67, command68, command69, command70])
+    subprocess.check_call([command52, command53, command54, command55, command56, command57, command58, command59, command60, command61, command62, command63, command64, command65, command66])
 
     output_filename4 = name + '.filtered.indels.vcf'
     output_file4 = job.fileStore.writeGlobalFile(output_filename4)
@@ -208,23 +204,23 @@ def combine(job, gatk, gatk_og, refFasta, refFasta_og, refIndex, refIndex_og, re
     filteredIndels5_filepath = os.path.join(tempDir, filteredIndels5_og)
     filteredIndels5 = job.fileStore.readGlobalFile(filteredIndels5, userPath=filteredIndels5_filepath)
 
-    command71 = 'java'
-    command72 = '-jar'
-    command73 = gatk
-    command74 = '-T'
-    command75 = 'CombineVariants'
-    command76 = '-R'
-    command77 = refFasta
-    command78 = '-V'
-    command79 = filteredSNPs4
-    command80 = '-V'
-    command81 = filteredIndels5
-    command82 = '--genotypemergeoption'
-    command83 = 'UNSORTED'
-    command84 = '-o'
-    command85 = name + '.filtered.snps.indels.vcf'
+    command67 = 'java'
+    command68 = '-jar'
+    command69 = gatk
+    command70 = '-T'
+    command71 = 'CombineVariants'
+    command72 = '-R'
+    command73 = refFasta
+    command74 = '-V'
+    command75 = filteredSNPs4
+    command76 = '-V'
+    command77 = filteredIndels5
+    command78 = '--genotypemergeoption'
+    command79 = 'UNSORTED'
+    command80 = '-o'
+    command81 = name + '.filtered.snps.indels.vcf'
 
-    subprocess.check_call([command71, command72, command73, command74, command75, command76, command77, command78, command79, command80, command81, command82, command83, command84, command85])
+    subprocess.check_call([command67, command68, command69, command70, command71, command72, command73, command74, command75, command76, command77, command78, command79, command80, command81])
 
     output_filename5 = name + '.filtered.snps.indels.vcf'
     output_file5 = job.fileStore.writeGlobalFile(output_filename5)
