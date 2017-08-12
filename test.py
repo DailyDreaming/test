@@ -16,7 +16,7 @@ class wdltoil:
 
     def __init__(self, wdl_filename, *args):
 
-        self.output_file = '/home/lifeisaboutfishtacos/Desktop/wdl-works/wdl04.py'
+        self.output_file = '/home/lifeisaboutfishtacos/Desktop/wdl-works/wdl4.py'
 
         self.module_list = ['from toil.job import Job',
                             'from toil.common import Toil',
@@ -770,7 +770,7 @@ def main():
 
     w.write_python_file(module_section, fn_section, main_section, job_section, w.output_file)
 
-    # subprocess.check_call(['python', w.output_file])
+    subprocess.check_call(['python', w.output_file])
 
 if __name__ == '__main__':
     main()
