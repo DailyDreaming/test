@@ -5,33 +5,28 @@ How to Run toilwdl.py
 -----------
 WDL files all require json files to accompany them.  To run a workflow, simply run:
 
-python toilwdl.py wdlfile.wdl jsonfile.json
+'''python toilwdl.py wdlfile.wdl jsonfile.json'''
 
 This will create a folder, toil_outputs, with all of the outputs of the current workflow.
 
 WDL Specifications
 ----------
 WDL Language specifications can be found here: https://github.com/broadinstitute/wdl/blob/develop/SPEC.md
-Implementing support for all features is currently very basic, but a basic roadmap so far is:
+
+Implementing support for more features is currently underway, but a basic roadmap so far is:
 
 CURRENTLY IMPLEMENTED:
  * scatter over tsv
  * handles calls, priority, and output file wrangling
  * handles single commands on the commandline
- * currently handles: $primitive_type & $array_type
+ * currently handles: $primitive_types & $array_types
 
-TO BE IMPLEMENTED:
- * handle yml/ymal
- * handle inserting memory requirements
+TO BE IMPLEMENTED SOON:
  * handle docker usage
- * handle multiple commands in commandline(?... test this)
+ * handle inserting memory requirements
  * implement type: $type_postfix_quantifier
  * "default" values inside variables
  * Alternative heredoc syntax ('>>>' & '<<<')
- * read_csv()
- * read_json()
-
-MAYBE IMPLEMENT LATER ON
- * validate wdl file & json prior?  the Broad has this written in java
- * these types: $map_type & $object_type
+ * read_csv(), read_json(), ... etc.
+ * $map_types & $object_types
  * wdl files that "import" other wdl files (including URI handling for 'http://' and 'https://')
