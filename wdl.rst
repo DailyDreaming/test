@@ -5,7 +5,7 @@ How to Run toilwdl.py
 -----------
 WDL files all require json files to accompany them.  To run a workflow, simply run:
 
-'''python toilwdl.py wdlfile.wdl jsonfile.json'''
+```python toilwdl.py wdlfile.wdl jsonfile.json```
 
 This will create a folder, toil_outputs, with all of the outputs of the current workflow.
 
