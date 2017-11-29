@@ -134,4 +134,4 @@ TO BE IMPLEMENTED SOON:
  * wdl files that "import" other wdl files (including URI handling for 'http://' and 'https://')
 
 .. _wdltool: https://github.com/broadinstitute/wdltool/releases
-.. _here: : https://github.com/broadinstitute/wdltool
+.. _'wdl repo': : https://github.com/broadinstitute/wdltool
