@@ -18,7 +18,7 @@ input that your wdl file needs to run:
 
 ``java -jar wdltool.jar inputs example_wdlfile.wdl``
 
-Once this json template is generated, open the file, and fill in values as necessary by hand.  WDL files all require
+When this json template is generated, open the file, and fill in values as necessary by hand.  WDL files all require
 json files to accompany them.  If no variable inputs are needed, a json file containing only '{}' may be required.
 
 Once a wdl file is validated and has an appropriate json file, workflows can be run in toil using:
