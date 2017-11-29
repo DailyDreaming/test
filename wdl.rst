@@ -4,14 +4,6 @@ WDL Support in Toil
 Support is still in the alpha phase and should be able to handle basic wdl files.  See the specification below for more
 details.
 
-    javascript
-    
-    function test() {
-    
-    console.log("look ma`, no spaces");
-    
-    }
-
 How to Run toilwdl.py
 -----------
 Recommended best practice when running wdl files is to use the Broad's wdltool for syntax validation and generating the
@@ -54,11 +46,11 @@ Next, use wdltool (https://github.com/broadinstitute/wdltool/releases) to genera
 This json file once opened should look like this:
 
 
-> {
-> "encode_mapping_workflow.fastqs": "Array[File]",
-> "encode_mapping_workflow.trimming_parameter": "String",
-> "encode_mapping_workflow.reference": "File"
-> }
+    {
+    "encode_mapping_workflow.fastqs": "Array[File]",
+    "encode_mapping_workflow.trimming_parameter": "String",
+    "encode_mapping_workflow.reference": "File"
+    }
 
 The trimming_parameter should be set to 'native' and the data files needed for an example run with this workflow are
 found here:
@@ -68,13 +60,11 @@ src/toil/test/wdl/ENCODE_data/ENCFF000VOL_chr21.fq.gz
 
 Editing the json to include these as inputs, the json should now look something like this:
 
-```
-{
-  "encode_mapping_workflow.fastqs": ["/home/username/toil/src/toil/test/wdl/ENCODE_data/ENCFF000VOL_chr21.fq.gz"],
-  "encode_mapping_workflow.trimming_parameter": "native",
-  "encode_mapping_workflow.reference": "/home/username/toil/src/toil/test/wdl/ENCODE_data/reference/GRCh38_chr21_bwa.tar.gz"
-}
-```
+    {
+    "encode_mapping_workflow.fastqs": ["/home/username/toil/src/toil/test/wdl/ENCODE_data/ENCFF000VOL_chr21.fq.gz"],
+    "encode_mapping_workflow.trimming_parameter": "native",
+    "encode_mapping_workflow.reference": "/home/username/toil/src/toil/test/wdl/ENCODE_data/reference/GRCh38_chr21_bwa.tar.gz"
+    }
 
 The wdl and json files can now be run using the command:
 
