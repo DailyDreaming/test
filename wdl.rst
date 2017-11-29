@@ -27,7 +27,7 @@ Once a wdl file is validated and has an appropriate json file, workflows can be 
 
 See options below for more parameters.
 
-ENCODE example from ENCODE-DCC
+ENCODE Example from ENCODE-DCC
 -----------
 To follow this example, you will need docker installed.  The original workflow can be found here:
 https://github.com/ENCODE-DCC/pipeline-container
