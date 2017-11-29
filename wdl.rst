@@ -49,7 +49,6 @@ This json file once opened should look like this:
 ``{``
 
 ``"encode_mapping_workflow.fastqs": "Array[File]",``
-
 ``"encode_mapping_workflow.trimming_parameter": "String",``
 
 ``"encode_mapping_workflow.reference": "File"``
