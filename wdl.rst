@@ -4,8 +4,8 @@ WDL Support in Toil
 Support is still in the alpha phase and should be able to handle basic wdl files.  See the specification below for more
 details.
 
-    javascript
-    function test() {
+    javascript\n
+    function test() {\n
     console.log("look ma`, no spaces");
     }
 
