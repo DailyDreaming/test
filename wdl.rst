@@ -47,9 +47,13 @@ This json file once opened should look like this:
 
 
     {
+    
     "encode_mapping_workflow.fastqs": "Array[File]",
+    
     "encode_mapping_workflow.trimming_parameter": "String",
+    
     "encode_mapping_workflow.reference": "File"
+    
     }
 
 The trimming_parameter should be set to 'native' and the data files needed for an example run with this workflow are
@@ -61,9 +65,13 @@ src/toil/test/wdl/ENCODE_data/ENCFF000VOL_chr21.fq.gz
 Editing the json to include these as inputs, the json should now look something like this:
 
     {
+    
     "encode_mapping_workflow.fastqs": ["/home/username/toil/src/toil/test/wdl/ENCODE_data/ENCFF000VOL_chr21.fq.gz"],
+    
     "encode_mapping_workflow.trimming_parameter": "native",
+    
     "encode_mapping_workflow.reference": "/home/username/toil/src/toil/test/wdl/ENCODE_data/reference/GRCh38_chr21_bwa.tar.gz"
+    
     }
 
 The wdl and json files can now be run using the command:
