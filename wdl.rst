@@ -11,19 +11,19 @@ needed json input file.  Full documentation is here: https://github.com/broadins
 
 That means two steps.  First, make sure your wdl file is valid and devoid of syntax errors by running:
 
-``java -jar wdltool.jar validate example.wdl``
+``java -jar wdltool.jar validate example_wdlfile.wdl``
 
 Second, generate a complementary json file if your wdl file needs one.  This json will contain keys for every necessary
 input that your wdl file needs to run:
 
-``java -jar wdltool.jar inputs example.wdl``
+``java -jar wdltool.jar inputs example_wdlfile.wdl``
 
 Once this json template is generated, open the file, and fill in values as necessary by hand.  WDL files all require
 json files to accompany them.  If no variable inputs are needed, a json file containing only '{}' may be required.
 
 Once a wdl file is validated and has an appropriate json file, workflows can be run in toil using:
 
-``toil-wdl-runner wdlfile.wdl jsonfile.json -o wdl_working``
+``toil-wdl-runner example_wdlfile.wdl jsonfile.json``
 
 The wdl and json files are required.
 
