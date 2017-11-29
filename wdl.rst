@@ -133,5 +133,5 @@ TO BE IMPLEMENTED SOON:
  * $map_types & $object_types
  * wdl files that "import" other wdl files (including URI handling for 'http://' and 'https://')
 
-.. _repo: : https://github.com/broadinstitute/wdltool
+.. _repo: https://github.com/broadinstitute/wdltool
 .. _wdltool: https://github.com/broadinstitute/wdltool/releases
