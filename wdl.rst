@@ -132,3 +132,7 @@ TO BE IMPLEMENTED SOON:
  * "default" values inside variables
  * $map_types & $object_types
  * wdl files that "import" other wdl files (including URI handling for 'http://' and 'https://')
+
+External hyperlinks, like wdltool_.
+
+.. _wdltool: http://www.python.org/ 
