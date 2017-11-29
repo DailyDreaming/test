@@ -7,7 +7,7 @@ details.
 How to Run toilwdl.py
 -----------
 Recommended best practice when running wdl files is to use the Broad's wdltool for syntax validation and generating the
-needed json input file.  Full documentation is here: https://github.com/broadinstitute/wdltool
+needed json input file.  Full documentation is here: https://github.com/broadinstitute/wdltool and a precompiled jar binary can be downloaded here: wdltool_.
 
 That means two steps.  First, make sure your wdl file is valid and devoid of syntax errors by running:
 
@@ -35,11 +35,11 @@ https://github.com/ENCODE-DCC/pipeline-container
 We've included the wdl file and data files in the toil repository needed to run this example.  First, find the wdl file:
 'src/toil/test/wdl/wdl_templates/testENCODE/encode_mapping_workflow.wdl'
 
-Next, use [wdltool](https://github.com/broadinstitute/wdltool/releases) to validate this file:
+Next, use wdltool_ to validate this file:
 
 ``java -jar wdltool.jar validate encode_mapping_workflow.wdl``
 
-Next, use [wdltool](https://github.com/broadinstitute/wdltool/releases) to generate a json file for this wdl file:
+Next, use wdltool_ to generate a json file for this wdl file:
 
 ``java -jar wdltool.jar inputs encode_mapping_workflow.wdl``
 
@@ -88,7 +88,7 @@ https://software.broadinstitute.org/wdl/documentation/topic?name=wdl-tutorials
 
 One can follow along with these tutorials, write their own wdl files following the directions and run them using either
 cromwell or toil.  For example, in tutorial 1, if you've followed along and named your wdl file 'helloHaplotypeCall.wdl'
-then once you've validated your wdl file using [wdltool](https://github.com/broadinstitute/wdltool/releases):
+then once you've validated your wdl file using wdltool_:
 
 ``java -jar wdltool.jar validate helloHaplotypeCaller.wdl``
 
@@ -133,8 +133,4 @@ TO BE IMPLEMENTED SOON:
  * $map_types & $object_types
  * wdl files that "import" other wdl files (including URI handling for 'http://' and 'https://')
 
-External hyperlinks, like wdltool_.
-External hyperlinks, like wdltool_.
-External hyperlinks, like wdltool_.
-
-.. _wdltool: http://www.python.org/ 
+.. _wdltool: https://github.com/broadinstitute/wdltool/releases
