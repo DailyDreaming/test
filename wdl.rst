@@ -4,6 +4,12 @@ WDL Support in Toil
 Support is still in the alpha phase and should be able to handle basic wdl files.  See the specification below for more
 details.
 
+```javascript
+function test() {
+ console.log("look ma`, no spaces");
+}
+```
+
 How to Run toilwdl.py
 -----------
 Recommended best practice when running wdl files is to use the Broad's wdltool for syntax validation and generating the
