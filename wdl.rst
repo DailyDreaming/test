@@ -7,7 +7,7 @@ details.
 How to Run toilwdl.py
 -----------
 Recommended best practice when running wdl files is to use the Broad's wdltool for syntax validation and generating the
-needed json input file.  Full documentation is can be found on the "wdl repo"_, and a precompiled jar binary can be downloaded here: wdltool_.
+needed json input file.  Full documentation can be found on the repo_, and a precompiled jar binary can be downloaded here: wdltool_.
 
 That means two steps.  First, make sure your wdl file is valid and devoid of syntax errors by running:
 
@@ -133,5 +133,5 @@ TO BE IMPLEMENTED SOON:
  * $map_types & $object_types
  * wdl files that "import" other wdl files (including URI handling for 'http://' and 'https://')
 
+.. _repo: : https://github.com/broadinstitute/wdltool
 .. _wdltool: https://github.com/broadinstitute/wdltool/releases
-.. _wdl repo: : https://github.com/broadinstitute/wdltool
