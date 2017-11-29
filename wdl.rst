@@ -4,9 +4,9 @@ WDL Support in Toil
 Support is still in the alpha phase and should be able to handle basic wdl files.  See the specification below for more
 details.
 
-How to Run toilwdl.py
+How to Run a WDL file in Toil
 -----------
-Recommended best practice when running wdl files is to use the Broad's wdltool for syntax validation and generating the
+Recommended best practice when running wdl files is to first use the Broad's wdltool for syntax validation and generating the
 needed json input file.  Full documentation can be found on the repository_, and a precompiled jar binary can be downloaded here: wdltool_.
 
 That means two steps.  First, make sure your wdl file is valid and devoid of syntax errors by running:
