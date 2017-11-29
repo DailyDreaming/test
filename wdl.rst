@@ -118,7 +118,7 @@ http://toil.readthedocs.io/en/3.12.0/running/cli.html
 
 WDL Specifications
 ----------
-WDL Language specifications can be found here: https://github.com/broadinstitute/wdl/blob/develop/SPEC.md
+WDL language specifications can be found here: https://github.com/broadinstitute/wdl/blob/develop/SPEC.md
 
 Implementing support for more features is currently underway, but a basic roadmap so far is:
 
