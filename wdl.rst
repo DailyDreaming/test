@@ -43,31 +43,29 @@ Next, use wdltool_ to generate a json file for this wdl file:
 
 ``java -jar wdltool.jar inputs encode_mapping_workflow.wdl``
 
-This json file once opened should look like this:
+This json file once opened should look like this::
 
-   .. code-block:: json
-        {
-        "encode_mapping_workflow.fastqs": "Array[File]",
-        "encode_mapping_workflow.trimming_parameter": "String",
-        "encode_mapping_workflow.reference": "File"
-        }
+    {
+    "encode_mapping_workflow.fastqs": "Array[File]",
+    "encode_mapping_workflow.trimming_parameter": "String",
+    "encode_mapping_workflow.reference": "File"
+    }
 
 The trimming_parameter should be set to 'native'.
 Download :download:`the example fastqs <../../src/toil/test/wdl/ENCODE_data.zip>` and unzip.  Inside are two data files
 required for the run:
 
     ENCODE_data/reference/GRCh38_chr21_bwa.tar.gz
-    
+
     ENCODE_data/ENCFF000VOL_chr21.fq.gz
 
-Editing the json to include these as inputs, the json should now look something like this:
+Editing the json to include these as inputs, the json should now look something like this::
 
-   .. code-block:: json
-        {
-        "encode_mapping_workflow.fastqs": ["/home/username/path/to/unzipped/ENCODE_data/ENCFF000VOL_chr21.fq.gz"],
-        "encode_mapping_workflow.trimming_parameter": "native",
-        "encode_mapping_workflow.reference": "/home/username/path/to/unzipped/ENCODE_data/reference/GRCh38_chr21_bwa.tar.gz"
-        }
+    {
+    "encode_mapping_workflow.fastqs": ["/home/username/path/to/unzipped/ENCODE_data/ENCFF000VOL_chr21.fq.gz"],
+    "encode_mapping_workflow.trimming_parameter": "native",
+    "encode_mapping_workflow.reference": "/home/username/path/to/unzipped/ENCODE_data/reference/GRCh38_chr21_bwa.tar.gz"
+    }
 
 The wdl and json files can now be run using the command:
 
