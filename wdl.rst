@@ -131,5 +131,5 @@ TO BE IMPLEMENTED SOON:
 
 .. _repository: https://github.com/broadinstitute/wdltool
 .. _wdltool: https://github.com/broadinstitute/wdltool/releases
-.. _java7_: http://www.oracle.com/technetwork/java/javase/downloads/java-archive-downloads-javase7-521261.html
+.. _java7: http://www.oracle.com/technetwork/java/javase/downloads/java-archive-downloads-javase7-521261.html
 .. _here: https://github.com/BD2KGenomics/toil/tree/master/src/toil/test/wdl/ENCODE_data.zip
