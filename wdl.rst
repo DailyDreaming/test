@@ -53,12 +53,14 @@ This json file once opened should look like this:
         }
 
 The trimming_parameter should be set to 'native'.
-Download :download:`the example fastqs <../../src/toil/test/wdl/ENCODE_data.zip>`.
+Download :download:`the example fastqs <../../src/toil/test/wdl/ENCODE_data.zip>` and unzip.  Inside are two data files
+required for the run:
 
-src/toil/test/wdl/ENCODE_data/reference/GRCh38_chr21_bwa.tar.gz
-src/toil/test/wdl/ENCODE_data/ENCFF000VOL_chr21.fq.gz
+    ENCODE_data/reference/GRCh38_chr21_bwa.tar.gz
+    
+    ENCODE_data/ENCFF000VOL_chr21.fq.gz
 
-Unzip the file.  Editing the json to include these as inputs, the json should now look something like this:
+Editing the json to include these as inputs, the json should now look something like this:
 
    .. code-block:: json
         {
