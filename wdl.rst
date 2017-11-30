@@ -32,8 +32,9 @@ ENCODE Example from ENCODE-DCC
 To follow this example, you will need docker installed.  The original workflow can be found here:
 https://github.com/ENCODE-DCC/pipeline-container
 
-We've included the wdl file and data files in the toil repository needed to run this example.  First, find the wdl file:
-'src/toil/test/wdl/wdl_templates/testENCODE/encode_mapping_workflow.wdl'
+We've included the wdl file and data files in the toil repository needed to run this example.  First, download 
+:download:`the example code <../../src/toil/test/wdl/wdl_templates.zip>` and unzip.  The file needed is:
+"testENCODE/encode_mapping_workflow.wdl".
 
 Next, use wdltool_ to validate this file:
 
@@ -52,7 +53,7 @@ This json file once opened should look like this::
     }
 
 The trimming_parameter should be set to 'native'.
-Download the example data here_ and unzip.  Inside are two data files
+Download :download:`the example data <../../src/toil/test/wdl/ENCODE_data.zip>` and unzip.  Inside are two data files
 required for the run:
 
 ``ENCODE_data/reference/GRCh38_chr21_bwa.tar.gz``
