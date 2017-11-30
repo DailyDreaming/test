@@ -61,9 +61,9 @@ required for the run:
 Editing the json to include these as inputs, the json should now look something like this::
 
     {
-    "encode_mapping_workflow.fastqs": ["/home/username/path/to/unzipped/ENCODE_data/ENCFF000VOL_chr21.fq.gz"],
+    "encode_mapping_workflow.fastqs": ["/path/to/unzipped/ENCODE_data/ENCFF000VOL_chr21.fq.gz"],
     "encode_mapping_workflow.trimming_parameter": "native",
-    "encode_mapping_workflow.reference": "/home/username/path/to/unzipped/ENCODE_data/reference/GRCh38_chr21_bwa.tar.gz"
+    "encode_mapping_workflow.reference": "/path/to/unzipped/ENCODE_data/reference/GRCh38_chr21_bwa.tar.gz"
     }
 
 The wdl and json files can now be run using the command:
