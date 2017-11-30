@@ -6,8 +6,9 @@ details.
 
 How to Run a WDL file in Toil
 -----------------------------
-Recommended best practice when running wdl files is to first use the Broad's wdltool for syntax validation and generating the
-needed json input file.  Full documentation can be found on the repository_, and a precompiled jar binary can be downloaded here: wdltool_.
+Recommended best practice when running wdl files is to first use the Broad's wdltool for syntax validation and generating
+the needed json input file.  Full documentation can be found on the repository_, and a precompiled jar binary can be
+downloaded here: wdltool_ (this requires java7_).
 
 That means two steps.  First, make sure your wdl file is valid and devoid of syntax errors by running:
 
@@ -32,15 +33,15 @@ ENCODE Example from ENCODE-DCC
 To follow this example, you will need docker installed.  The original workflow can be found here:
 https://github.com/ENCODE-DCC/pipeline-container
 
-We've included the wdl file and data files in the toil repository needed to run this example.  First, download 
+We've included the wdl file and data files in the toil repository needed to run this example.  First, download
 :download:`the example code <../../src/toil/test/wdl/wdl_templates.zip>` and unzip.  The file needed is:
 "testENCODE/encode_mapping_workflow.wdl".
 
-Next, use wdltool_ to validate this file:
+Next, use wdltool_ (this requires java7_) to validate this file:
 
 ``java -jar wdltool.jar validate encode_mapping_workflow.wdl``
 
-Next, use wdltool_ to generate a json file for this wdl file:
+Next, use wdltool_ (this requires java7_) to generate a json file for this wdl file:
 
 ``java -jar wdltool.jar inputs encode_mapping_workflow.wdl``
 
@@ -81,7 +82,7 @@ https://software.broadinstitute.org/wdl/documentation/topic?name=wdl-tutorials
 
 One can follow along with these tutorials, write their own wdl files following the directions and run them using either
 cromwell or toil.  For example, in tutorial 1, if you've followed along and named your wdl file 'helloHaplotypeCall.wdl'
-then once you've validated your wdl file using wdltool_ (this requires "java 7"_):
+then once you've validated your wdl file using wdltool_ (this requires java7_):
 
 ``java -jar wdltool.jar validate helloHaplotypeCaller.wdl``
 
@@ -130,5 +131,5 @@ TO BE IMPLEMENTED SOON:
 
 .. _repository: https://github.com/broadinstitute/wdltool
 .. _wdltool: https://github.com/broadinstitute/wdltool/releases
-.. _java 7: http://www.oracle.com/technetwork/java/javase/downloads/java-archive-downloads-javase7-521261.html
+.. _java7_: http://www.oracle.com/technetwork/java/javase/downloads/java-archive-downloads-javase7-521261.html
 .. _here: https://github.com/BD2KGenomics/toil/tree/master/src/toil/test/wdl/ENCODE_data.zip
