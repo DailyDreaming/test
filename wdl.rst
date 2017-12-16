@@ -34,8 +34,7 @@ To follow this example, you will need docker installed.  The original workflow c
 https://github.com/ENCODE-DCC/pipeline-container
 
 We've included the wdl file and data files in the toil repository needed to run this example.  First, download
-:download:`the example code <http://toil-datasets.s3.amazonaws.com/ENCODE_data.zip>` and unzip.  The file needed is:
-"testENCODE/encode_mapping_workflow.wdl".
+the example code_ and unzip.  The file needed is: "testENCODE/encode_mapping_workflow.wdl".
 
 Next, use wdltool_ (this requires java7_) to validate this file:
 
@@ -54,8 +53,7 @@ This json file once opened should look like this::
     }
 
 The trimming_parameter should be set to 'native'.
-Download :download:`the example data <http://toil-datasets.s3.amazonaws.com/ENCODE_data.zip>` and unzip.  Inside are two data files
-required for the run:
+Download the example code_ and unzip.  Inside are two data files required for the run:
 
 ``ENCODE_data/reference/GRCh38_chr21_bwa.tar.gz``
 ``ENCODE_data/ENCFF000VOL_chr21.fq.gz``
@@ -133,3 +131,4 @@ TO BE IMPLEMENTED SOON:
 .. _wdltool: https://github.com/broadinstitute/wdltool/releases
 .. _java7: http://www.oracle.com/technetwork/java/javase/downloads/java-archive-downloads-javase7-521261.html
 .. _here: https://github.com/BD2KGenomics/toil/tree/master/src/toil/test/wdl/ENCODE_data.zip
+.. _code: http://toil-datasets.s3.amazonaws.com/ENCODE_data.zip
