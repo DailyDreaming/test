@@ -40,7 +40,7 @@ Next, use wdltool_ (this requires java7_) to validate this file:
 
 ``java -jar wdltool.jar validate encode_mapping_workflow.wdl``
 
-Next, use wdltool_ (this requires java7_) to generate a json file for this wdl file:
+Next, use wdltool to generate a json file for this wdl file:
 
 ``java -jar wdltool.jar inputs encode_mapping_workflow.wdl``
 
