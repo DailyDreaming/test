@@ -1,240 +1,475 @@
-.. _commandRef:
+.. _running:
 
-.. _workflowOptions:
+Quickstart Examples
+===================
 
-Toil Workflow Options and Command Line Interface
-================================================
+.. _quickstart:
 
-The ``toil`` CLI supports the following commands as arguments:
+Running a basic workflow
+------------------------
 
-	``status`` - Reports runtime and resource usage for all jobs in a specified jobstore
+A Toil workflow can be run with just three steps.
+ 
+1. Install Toil (see :ref:`installation-ref`)
 
-	``stats`` - Inspects a job store to see which jobs have failed, run successfully, etc.
+2. Copy and paste the following code block into ``helloWorld.py``:
 
-	``destroy-cluster`` - For autoscaling.  Terminates the specified cluster and associated resources.
+   .. code-block:: python
 
-	``launch-cluster`` - For autoscaling.  This is used to launch a toil leader instance with the specified provisioner.
+      from toil.common import Toil
+      from toil.job import Job
 
-	``rsync-cluster`` - For autoscaling.  Used to transfer files to a cluster launched with ``toil launch-cluster``.
+      def helloWorld(message, memory="1G", cores=1, disk="1G"):
+          return "Hello, world!, here's a message: %s" % message
 
-	``kill`` - Kills any running jobs trees in a rogue toil.
+      if __name__ == "__main__":
+          parser = Job.Runner.getDefaultArgumentParser()
+          options = parser.parse_args()
+          with Toil(options) as toil:
+              output = toil.start(Job.wrapFn(helloWorld, "You did it!"))
+          print output
 
-	``clean`` - Delete the job store used by a previous Toil workflow invocation.
+3. Specify a job store and run the workflow like so::
 
-	``ssh-cluster`` - SSHs into the toil appliance container running on the leader of the cluster.
+       (venv) $ python helloWorld.py file:my-job-store
 
-Status
-------
+.. note::
 
-To use the status command, a workflow must first be run using the ``--stats`` option.
+   Don't actually type ``(venv) $`` in at the beginning of each command. This is intended only to remind the user that
+   they should have their :ref:`virtual environment <venvPrep>` running.
 
-An example of this would be running the following::
+Congratulations! You've run your first Toil workflow on the ``singleMachine`` batch system (the default) using the
+``file`` job store.
 
-    toil discoverfiles.py file:my-jobstore --stats
+The batch system is what schedules the jobs Toil creates. Toil supports many different kinds of batch systems
+(such as `Apache Mesos`_ and Grid Engine) which makes it easy to run your workflow in all kinds of places.
+The ``singleMachine`` batch system is primarily used to prepare and debug workflows on the
+local machine. Once ready, they can be run on a full-fledged batch system (see :ref:`batchsysteminterface`).
 
-Where ``discoverfiles.py`` is the following:
+Usually, a workflow will generate files, and Toil
+needs a place to keep track of things. The job store is where Toil keeps all of the intermediate files shared
+between jobs. The argument you passed in to your script ``file:my-job-store`` indicated where. The ``file:``
+part just tells Toil you are using the ``file`` job store, which means everything is kept in a temporary directory
+called ``my-job-store``. (Read more about :ref:`jobStoreInterface`.)
+
+Toil is totally customizable! Run ``python helloWorld.py --help`` to see a complete list of available options.
+
+For something beyond a "Hello, world!" example, refer to :ref:`runningDetail`.
+
+.. _Apache Mesos: https://mesos.apache.org/gettingstarted/
+
+.. _cwlquickstart:
+
+Running a basic CWL workflow
+----------------------------
+
+The `Common Workflow Language`_ (CWL) is an emerging standard for writing
+workflows that are portable across multiple workflow engines and platforms.
+Running CWL workflows using Toil is easy.
+
+#. First ensure that Toil is installed with the
+   ``cwl`` extra (see :ref:`extras`).  ::
+
+       (venv) $ pip install 'toil[cwl]'
+
+   This installs the ``toil-cwl-runner`` and ``cwl-runner`` executables. These are identical -
+   ``cwl-runner`` is the portable name for the default system CWL runner.
+
+#. Copy and paste the following code block into ``example.cwl``:
+
+   .. code-block:: yaml
+
+       cwlVersion: v1.0
+       class: CommandLineTool
+       baseCommand: echo
+       stdout: output.txt
+       inputs:
+         message:
+           type: string
+           inputBinding:
+             position: 1
+       outputs:
+         output:
+           type: stdout
+
+   and this code into ``example-job.yaml``:
+
+   .. code-block:: yaml
+
+        message: Hello world!
+
+#. To run the workflow simply enter ::
+
+        (venv) $ toil-cwl-runner example.cwl example-job.yaml
+
+   Your output will be in ``output.txt`` ::
+
+        (venv) $ cat output.txt
+        Hello world!
+
+To learn more about CWL, see the `CWL User Guide`_ (from where this example was
+shamelessly borrowed).
+
+To run this workflow on an AWS cluster have a look at :ref:`awscwl`.
+
+For information on using CWL with Toil see the section :ref:`cwl`
+
+.. _CWL User Guide: http://www.commonwl.org/v1.0/UserGuide.html
+
+.. _runningDetail:
+
+A (more) real-world example
+---------------------------
+
+For a more detailed example and explanation, we've developed a sample pipeline
+that merge-sorts a temporary file. This is not supposed to be an efficient 
+sorting program, rather a more fully worked example of what Toil is capable of.
+
+Running the example
+~~~~~~~~~~~~~~~~~~~
+
+#. Download :download:`the example code <../../src/toil/test/sort/sort.py>`.
+
+
+#. Run it with the default settings::
+
+      (venv) $ python sort.py file:jobStore
+
+   The workflow created a file called ``sortedFile.txt`` in your current directory.
+   Have a look at it and notice that it contains a whole lot of sorted lines!
+
+   This workflow does a smart merge sort on a file it generates. A file called ``fileToSort.txt``. The sort is *smart*
+   because each step of the process---splitting the file into separate chunks, sorting these chunks, and merging them
+   back together---is compartmentalized into a **job**. Each job can specify it's own resource requirements and will
+   only be run after the jobs it depends upon have run. Jobs without dependencies will be run in parallel.
+
+#. Run with custom options::
+
+      (venv) $ python sort.py file:jobStore --numLines=5000 --lineLength=10 --workDir=/tmp/ --overwriteOutput=True
+
+   Here we see that we can add our own options to a Toil script. The first two
+   options determine the number of lines and how many characters are in each line.
+   The last option is a built-in Toil option where temporary files unique to a
+   job are kept.
+
+Describing the source code
+~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+To understand the details of what's going on inside.
+Let's start with the ``main()`` function. It looks like a lot of code, but don't worry, we'll break it down piece by
+piece.
+
+.. literalinclude:: ../../src/toil/test/sort/sort.py
+    :pyobject: main
+
+First we make a parser to process command line arguments using the `argparse`_ module. It's important that we add the
+call to :func:`Job.Runner.addToilOptions` to initialize our parser with all of Toil's default options. Then we add
+the command line arguments unique to this workflow, and parse the input. The help message listed with the arguments
+should give you a pretty good idea of what they can do.
+
+Next we do a little bit of verification of the input arguments. The option ``--fileToSort`` allows you to specify a file
+that needs to be sorted. If this option isn't given, it's here that we make our own file with the call to
+:func:`makeFileToSort`.
+
+Finally we come to the context manager that initializes the workflow. We create a path to the input file prepended with
+``'file://'`` as per the documentation for :func:`toil.common.Toil` when staging a file that is stored locally. Notice
+that we have to check whether or not the workflow is restarting so that we don't import the file more than once.
+Finally we can kick off the workflow by calling :func:`toil.common.Toil.start` on the job ``setup``. When the workflow
+ends we capture its output (the sorted file's fileID) and use that in :func:`toil.common.Toil.exportFile` to move the
+sorted file from the job store back into "userland".
+
+Next let's look at the job that begins the actual workflow, ``setup``.
+
+.. literalinclude:: ../../src/toil/test/sort/sort.py
+    :pyobject: setup
+
+``setup`` really only does two things. First it writes to the logs using :func:`Job.log` and then
+calls :func:`addChildJobFn`. Child jobs run directly after the current job. This function turns the 'job function'
+``down`` into an actual job and passes in the inputs including an optional resource requirement, ``memory``. The job
+doesn't actually get run until the call to :func:`Job.rv`. Once the job ``down`` finishes, its output is returned here.
+
+Now we can look at what ``down`` does.
+
+.. literalinclude:: ../../src/toil/test/sort/sort.py
+    :pyobject: down
+
+Down is the recursive part of the workflow. First we read the file into the local filestore by calling
+:func:`Job.FileStore.readGlobalFile`. This puts a copy of the file in the temp directory for this particular job. This
+storage will disappear once this job ends. For a detailed explanation of the filestore, job store, and their interfaces
+have a look at :ref:`managingFiles`.
+
+Next ``down`` checks the base case of the recursion: is the length of the input file less than ``N`` (remember ``N``
+was an option we added to the workflow in ``main``). In the base case, we just sort the file, and return the file ID
+of this new sorted file.
+
+If the base case fails, then the file is split into two new tempFiles using :func:`Job.FileStore.getLocalTempFile` and
+the helper function ``copySubRangeOfFile``. Finally we add a follow on Job ``up`` with :func:`Job.addFollowOnJobFn`.
+We've already seen child jobs. A follow-on Job is a job that runs after the current job and *all* of its children (and their children and follow-ons) have
+completed. Using a follow-on makes sense because ``up`` is responsible for merging the files together and we don't want
+to merge the files together until we *know* they are sorted. Again, the return value of the follow-on job is requested
+using :func:`Job.rv`.
+
+Looking at ``up``
+
+.. literalinclude:: ../../src/toil/test/sort/sort.py
+    :pyobject: up
+
+we see that the two input files are merged together and the output is written to a new file using
+:func:`job.FileStore.writeGlobalFileStream`. After a little cleanup, the output file is returned.
+
+Once the final ``up`` finishes and all of the ``rv()`` promises are fulfilled, ``main`` receives the sorted file's ID
+which it uses in ``exportFile`` to send it to the user.
+
+There are other things in this example that we didn't go over such as :ref:`checkpoints` and the details of much of the
+the :ref:`api`.
+
+.. _argparse: https://docs.python.org/2.7/library/argparse.html
+
+At the end of the script the lines: 
 
 .. code-block:: python
 
-    import subprocess
-    from toil.common import Toil
-    from toil.job import Job
-
-    class discoverFiles(Job):
-        """Views files at a specified path using ls."""
-        def __init__(self, path, *args, **kwargs):
-            self.path = path
-            super(discoverFiles, self).__init__(*args, **kwargs)
-
-        def run(self, fileStore):
-            subprocess.check_call(["ls", self.path])
-
-    def main():
-        options = Job.Runner.getDefaultArgumentParser().parse_args()
-
-        job1 = discoverFiles(path="/", displayName='sysFiles')
-        job2 = discoverFiles(path="/home/lifeisaboutfishtacos", displayName='userFiles')
-        job3 = discoverFiles(path="/home/andbeeftacos")
-
-        job1.addChild(job2)
-        job2.addChild(job3)
-
-        with Toil(options) as toil:
-            if not toil.options.restart:
-                toil.start(job1)
-            else:
-                toil.restart()
-
-    if __name__ == '__main__':
+    if __name__ == '__main__'
         main()
 
-Notice the ``displayName`` key, which can rename a job, giving it an alias when it is finally displayed in stats.
-Running this workflow file should record three job names then: ``sysFiles`` (job1), ``userFiles`` (job2), and ``discoverFiles`` (job3).
-To see the runtime and resources used for each job when it was run, type::
+are included to ensure that the main function is only run once in the '__main__' process
+invoked by you, the user.
+In Toil terms, by invoking the script you created the *leader process* 
+in which the ``main()`` 
+function is run. A *worker process* is a separate process whose sole purpose 
+is to host the execution of one or more jobs defined in that script. In any Toil
+workflow there is always one leader process, and potentially many worker processes.
 
-    toil stats file:my-jobstore
+When using the single-machine batch system (the default), the worker processes will be running
+on the same machine as the leader process. With full-fledged batch systems like
+Mesos the worker processes will typically be started on separate machines. The
+boilerplate ensures that the pipeline is only started once–on the leader–but
+not when its job functions are imported and executed on the individual workers.
 
-This should output the following:
-
-.. code-block:: python
-
-    Batch System: singleMachine
-    Default Cores: 1  Default Memory: 2097152K
-    Max Cores: 9.22337e+18
-    Total Clock: 0.56  Total Runtime: 1.01
-    Worker
-        Count |                                    Time* |                                    Clock |                                     Wait |                                   Memory
-            n |      min    med*     ave     max   total |      min     med     ave     max   total |      min     med     ave     max   total |      min     med     ave     max   total
-            1 |     0.14    0.14    0.14    0.14    0.14 |     0.13    0.13    0.13    0.13    0.13 |     0.01    0.01    0.01    0.01    0.01 |      76K     76K     76K     76K     76K
-    Job
-     Worker Jobs  |     min    med    ave    max
-                  |       3      3      3      3
-        Count |                                    Time* |                                    Clock |                                     Wait |                                   Memory
-            n |      min    med*     ave     max   total |      min     med     ave     max   total |      min     med     ave     max   total |      min     med     ave     max   total
-            3 |     0.01    0.06    0.05    0.07    0.14 |     0.00    0.06    0.04    0.07    0.12 |     0.00    0.01    0.00    0.01    0.01 |      76K     76K     76K     76K    229K
-     sysFiles
-        Count |                                    Time* |                                    Clock |                                     Wait |                                   Memory
-            n |      min    med*     ave     max   total |      min     med     ave     max   total |      min     med     ave     max   total |      min     med     ave     max   total
-            1 |     0.01    0.01    0.01    0.01    0.01 |     0.00    0.00    0.00    0.00    0.00 |     0.01    0.01    0.01    0.01    0.01 |      76K     76K     76K     76K     76K
-     userFiles
-        Count |                                    Time* |                                    Clock |                                     Wait |                                   Memory
-            n |      min    med*     ave     max   total |      min     med     ave     max   total |      min     med     ave     max   total |      min     med     ave     max   total
-            1 |     0.06    0.06    0.06    0.06    0.06 |     0.06    0.06    0.06    0.06    0.06 |     0.01    0.01    0.01    0.01    0.01 |      76K     76K     76K     76K     76K
-     discoverFiles
-        Count |                                    Time* |                                    Clock |                                     Wait |                                   Memory
-            n |      min    med*     ave     max   total |      min     med     ave     max   total |      min     med     ave     max   total |      min     med     ave     max   total
-            1 |     0.07    0.07    0.07    0.07    0.07 |     0.07    0.07    0.07    0.07    0.07 |     0.00    0.00    0.00    0.00    0.00 |      76K     76K     76K     76K     76K
+Typing ``python sort.py --help`` will show the complete list of
+arguments for the workflow which includes both Toil's and ones defined inside
+``sort.py``. A complete explanation of Toil's arguments can be
+found in :ref:`commandRef`.
 
 
-Toil also provides several command line options when running a toil script (see :ref:`running`),
-or using Toil to run a CWL script. Many of these are described below.
-For most Toil scripts, executing::
-
-    $ python MY_TOIL_SCRIPT.py --help
-
-will show this list of options.
-
-It is also possible to set and manipulate the options described when invoking a
-Toil workflow from within Python using :func:`toil.job.Job.Runner.getDefaultOptions`, e.g.
-
-.. code-block:: python
-
-    options = Job.Runner.getDefaultOptions("./toilWorkflow") # Get the options object
-    options.logLevel = "INFO" # Set the log level to the info level.
-    options.clean = "ALWAYS" # Always delete the jobStore after a run
-
-    with Toil(options) as toil:
-        toil.start(Job())  # Run the script
-
-
-.. _loggingRef:
 
 Logging
--------
-Toil hides stdout and stderr by default except in case of job failure.
-For more robust logging options (default is INFO), use ``--logDebug`` or more generally, use
-``--logLevel=``, which may be set to either ``OFF`` (or ``CRITICAL``), ``ERROR``, ``WARN`` (or ``WARNING``),
-``INFO`` or ``DEBUG``. Logs can be directed to a file with ``--logFile=``.
+~~~~~~~
 
-If large logfiles are a problem, ``--maxLogFileSize`` (in bytes) can be set as well as ``--rotatingLogging``, which
-prevents logfiles from getting too large.
+By default, Toil logs a lot of information related to the current environment
+in addition to messages from the batch system and jobs. This can be configured
+with the ``--logLevel`` flag. For example, to only log ``CRITICAL`` level
+messages to the screen::
 
-Stats
------
-The ``--stats`` argument records statistics about the Toil workflow in the job store. After a Toil run has finished,
-the command ``toil stats <jobStore>`` can be used to return statistics about cpu, memory, job duration, and more.
-The job store will never be deleted with ``--stats``, as it overrides ``--clean``.
+   (venv) $ python sort.py file:jobStore --logLevel=critical --overwriteOutput=True
 
-Restart
--------
-In the event of failure, Toil can resume the pipeline by adding the argument ``--restart`` and rerunning the
-python script. Toil pipelines can even be edited and resumed which is useful for development or troubleshooting.
-
-Clean
------
-If a Toil pipeline didn't finish successfully, or is using a variation of ``--clean``, the job store will exist
-until it is deleted. ``toil clean <jobStore>`` ensures that all artifacts associated with a job store are removed.
-This is particularly useful for deleting AWS job stores, which reserves an SDB domain as well as an S3 bucket.
-
-The deletion of the job store can be modified by the ``--clean`` argument, and may be set to ``always``, ``onError``,
-``never``, or ``onSuccess`` (default).
-
-Temporary directories where jobs are running can also be saved from deletion using the ``--cleanWorkDir``, which has
-the same options as ``--clean``.  This option should only be run when debugging, as intermediate jobs will fill up
-disk space.
+This hides most of the information we get from the Toil run. For more detail,
+we can run the pipeline with ``--logLevel=debug`` to see a comprehensive
+output. For more information, see :ref:`loggingRef`.
 
 
-Batch system
-------------
+Error Handling and Resuming Pipelines
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Toil supports several different batch systems using the ``--batchSystem`` argument.
-More information in the :ref:`batchsysteminterface`.
+With Toil, you can recover gracefully from a bug in your pipeline without losing
+any progress from successfully-completed jobs. To demonstrate this, let's add
+a bug to our example code to see how Toil handles a failure and how we can
+resume a pipeline after that happens. Add a bad assertion at line 52 of the
+example (the first line of ``down()``):
+
+.. code-block:: python
+
+   def down(job, inputFileStoreID, N, downCheckpoints, memory=sortMemory):
+       ...
+       assert 1 == 2, "Test error!"
+
+When we run the pipeline, Toil will show a detailed failure log with a traceback::
+
+   (venv) $ python sort.py file:jobStore
+   ...
+   ---TOIL WORKER OUTPUT LOG---
+   ...
+   m/j/jobonrSMP    Traceback (most recent call last):
+   m/j/jobonrSMP      File "toil/src/toil/worker.py", line 340, in main
+   m/j/jobonrSMP        job._runner(jobGraph=jobGraph, jobStore=jobStore, fileStore=fileStore)
+   m/j/jobonrSMP      File "toil/src/toil/job.py", line 1270, in _runner
+   m/j/jobonrSMP        returnValues = self._run(jobGraph, fileStore)
+   m/j/jobonrSMP      File "toil/src/toil/job.py", line 1217, in _run
+   m/j/jobonrSMP        return self.run(fileStore)
+   m/j/jobonrSMP      File "toil/src/toil/job.py", line 1383, in run
+   m/j/jobonrSMP        rValue = userFunction(*((self,) + tuple(self._args)), **self._kwargs)
+   m/j/jobonrSMP      File "toil/example.py", line 30, in down
+   m/j/jobonrSMP        assert 1 == 2, "Test error!"
+   m/j/jobonrSMP    AssertionError: Test error!
+
+If we try and run the pipeline again, Toil will give us an error message saying
+that a job store of the same name already exists. By default, in the event of a
+failure, the job store is preserved so that the workflow can be restarted,
+starting from the previously failed jobs. We can restart the pipeline by running::
+
+   (venv) $ python sort.py file:jobStore --restart --overwriteOutput=True
+
+We can also change the number of times Toil will attempt to retry a failed job::
+
+   (venv) $ python sort.py --retryCount 2 --restart --overwriteOutput=True
+
+You'll now see Toil attempt to rerun the failed job until it runs out of tries.
+``--retryCount`` is useful for non-systemic errors, like downloading a file that
+may experience a sporadic interruption, or some other non-deterministic failure.
+
+To successfully restart our pipeline, we can edit our script to comment out
+line 30, or remove it, and then run
+
+::
+
+   (venv) $ python sort.py --restart --overwriteOutput=True
+
+The pipeline will run successfully, and the job store will be removed on the
+pipeline's completion.
 
 
-Default cores, disk, and memory
--------------------------------
+Collecting Statistics
+~~~~~~~~~~~~~~~~~~~~~
 
-Toil uses resource requirements to intelligently schedule jobs. The defaults for cores (1), disk (2G), and memory (2G),
-can all be changed using ``--defaultCores``, ``--defaultDisk``, and ``--defaultMemory``. Standard suffixes
-like K, Ki, M, Mi, G or Gi are supported.
+Please see the :ref:`cli` **Status** section for more on gathering runtime and resource info on jobs.
 
 
-Job store
----------
+Launching a Toil Workflow in AWS
+--------------------------------
+After having installed the ``aws`` extra for Toil during the :ref:`installation-ref` and set up AWS (see :ref:`prepare_aws-ref`), the user can run the basic ``helloWorld.py`` script (:ref:`quickstart`) on a VM in AWS just by modifying the run command.  
 
-Running toil scripts has one required positional argument: the job store.  The default job store is just a path
-to where the user would like the job store to be created. To use the :ref:`quick start <quickstart>` example,
-if you're on a node that has a large **/scratch** volume, you can specify the jobstore be created there by
-executing: ``python HelloWorld.py /scratch/my-job-store``, or more explicitly,
-``python HelloWorld.py file:/scratch/my-job-store``. Toil uses the colon as way to explicitly name what type of
-job store the user would like. The other job store types are AWS (``aws:region-here:job-store-name``),
-Azure (``azure:account-name-here:job-store-name``), and the experimental Google
-job store (``google:projectID-here:job-store-name``). Different types of job store options can be
-looked up in :ref:`jobStoreInterface`.
+Note that when running in AWS, users can either run the workflow on a single instance or run it on a cluster (which is running across multiple containers on multliple AWS instances).  For more information on running Toil workflows on a cluster, see :ref:`runningAWS`.
 
-Miscellaneous
--------------
-Here are some additional useful arguments that don't fit into another category.
 
-* ``--workDir`` sets the location where temporary directories are created for running jobs.
-* ``--retryCount`` sets the number of times to retry a job in case of failure. Useful for non-systemic failures like HTTP requests.
-* ``--sseKey`` accepts a path to a 32-byte key that is used for server-side encryption when using the AWS job store.
-* ``--cseKey`` accepts a path to a 256-bit key to be used for client-side encryption on Azure job store.
-* ``--setEnv <NAME=VALUE>`` sets an environment variable early on in the worker
+#. Launch a cluster in AWS using the :ref:`launchCluster` command. The arguments ``keyPairName``, ``leaderNodeType``, and ``zone`` are required to launch a cluster. ::
 
-For implementation-specific flags for schedulers like timelimits, queues, accounts, etc.. An environment variable can be
-defined before launching the Job, i.e:
+       (venv) $ toil launch-cluster <cluster-name> \
+	--keyPairName <AWS-key-pair-name> \
+       --leaderNodeType t2.medium \
+	--zone us-west-2a
 
-.. code-block:: console
 
-    export TOIL_SLURM_ARGS="-t 1:00:00 -q fatq"
+#. Copy ``helloWorld.py`` to the ``/tmp`` directory on the leader node using the :ref:`rsyncCluster` command. Note that the command requires defining the file to copy as well as the target location on the cluster leader node.::
 
-Running Workflows with Services
--------------------------------
+      	(venv) $ toil rsync-cluster --zone us-west-2a <cluster-name> helloWorld.py :/tmp
 
-Toil supports jobs, or clusters of jobs, that run as *services* (see :ref:`serviceDev`) to other
-*accessor* jobs. Example services include server databases or Apache Spark
-Clusters. As service jobs exist to provide services to accessor jobs their
-runtime is dependent on the concurrent running of their accessor jobs. The dependencies
-between services and their accessor jobs can create potential deadlock scenarios,
-where the running of the workflow hangs because only service jobs are being
-run and their accessor jobs can not be scheduled because of too limited resources
-to run both simultaneously. To cope with this situation Toil attempts to
-schedule services and accessors intelligently, however to avoid a deadlock
-with workflows running service jobs it is advisable to use the following parameters:
+#. Login to the cluster leader node using the :ref:`sshCluster` command. Note this command will log you in as the ``root`` user ::
 
-* ``--maxServiceJobs`` The maximum number of service jobs that can be run concurrently, excluding service jobs running on preemptable nodes.
-* ``--maxPreemptableServiceJobs`` The maximum number of service jobs that can run concurrently on preemptable nodes.
+      	(venv) $ toil ssh-cluster --zone us-west-2a <cluster-name>
 
-Specifying these parameters so that at a maximum cluster size there will be
-sufficient resources to run accessors in addition to services will ensure that
-such a deadlock can not occur.
+#. Run the Toil script in the cluster.  In this particular case, we create an S3 bucket called ``my-S3-bucket`` in the ``us-west-2`` availability zone to store intermediate job results. ::
 
-If too low a limit is specified then a deadlock can occur in which toil can
-not schedule sufficient service jobs concurrently to complete the workflow.
-Toil will detect this situation if it occurs and throw a
-:class:`toil.DeadlockException` exception. Increasing the cluster size
-and these limits will resolve the issue.
+      	$ python /tmp/helloWorld.py aws:us-west-2:my-S3-bucket
 
-.. _clusterRef:
+   Along with some other ``INFO`` log messages, you should get the following output in your terminal window: ``Hello, world!, here's a message: You did it!``
 
+
+#. Exit from the SSH connection. ::
+
+      	$ exit
+
+#. Use the :ref:`destroyCluster` command to destroy the cluster. Note this command will destroy the cluster leader node and any resources created to run the job, including the S3 bucket. ::
+
+      	(venv) $ toil destroy-cluster --zone us-west-2a <cluster-name>
+
+
+
+.. _awscwl:
+
+Running a CWL Workflow on AWS
+-----------------------------
+After having installed the ``aws`` and ``cwl`` extras for Toil during the :ref:`installation-ref` and set up AWS (see :ref:`prepare_aws-ref`),
+the user can run a CWL workflow with Toil on AWS.
+
+#. First launch a node in AWS using the :ref:`launchCluster` command. ::
+
+    	(venv) $ toil launch-cluster <cluster-name> \
+    	--keyPairName <AWS-key-pair-name> \
+    	--leaderNodeType t2.micro \
+    	--zone us-west-2a
+
+#. Copy ``example.cwl`` and ``example-job.cwl`` from the :ref:`CWL example <cwlquickstart>` to the node using the :ref:`rsyncCluster` command. ::
+
+     	(venv) $ toil rsync-cluster --zone us-west-2a <cluster-name> \
+	example.cwl example-job.cwl :/tmp
+
+#. Launch the CWL workflow using the :ref:`sshCluster` utility. ::
+
+      	(venv) $ toil ssh-cluster --zone us-west-2a <cluster-name> \
+      	toil-cwl-runner \
+      	/tmp/example.cwl \
+      	/tmp/example-job.yml
+
+   ..  tip::
+
+      When running a CWL workflow on AWS, input files can be provided either on the
+      local file system or in S3 buckets using ``s3://`` URI references. Final output
+      files will be copied to the local file system of the leader node.
+
+#. Destroy the cluster. ::
+
+      	(venv) $ toil destroy-cluster --zone us-west-2a <cluster-name>
+
+
+.. _awscactus:
+
+Running a Workflow with Autoscaling on AWS - Cactus
+---------------------------------------------------
+
+`Cactus <https://github.com/ComparativeGenomicsToolkit/cactus>`__ is a reference-free whole-genome multiple alignment program.
+
+#. Download :download:`pestis.tar.gz <../../src/toil/test/cactus/pestis.tar.gz>`.
+
+#. Launch a leader node in AWS using the :ref:`launchCluster` command. ::
+
+        (venv) $ toil launch-cluster <cluster-name> \
+        --keyPairName <AWS-key-pair-name> \
+        --leaderNodeType t2.medium \
+        --zone us-west-2c
+	(venv) $ export TOIL_AWS_ZONE=us-west-2c
+
+#. Copy the required files, i.e., seqFile.txt (a text file containing the locations of the input sequences as well as their phylogenetic tree, see `here <https://github.com/ComparativeGenomicsToolkit/cactus#seqfile-the-input-file>`__), organisms' genome sequence files in FASTA format, and configuration files (e.g. blockTrim1.xml, if desired), up to the leader node. ::
+
+	(venv) $ toil rsync-cluster <cluster-name> pestis-short-aws-seqFile.txt :/tmp
+	(venv) $ toil rsync-cluster <cluster-name> GCF_000169655.1_ASM16965v1_genomic.fna :/tmp
+	(venv) $ toil rsync-cluster <cluster-name> GCF_000006645.1_ASM664v1_genomic.fna :/tmp
+	(venv) $ toil rsync-cluster <cluster-name> GCF_000182485.1_ASM18248v1_genomic.fna :/tmp
+	(venv) $ toil rsync-cluster <cluster-name> GCF_000013805.1_ASM1380v1_genomic.fna :/tmp
+	(venv) $ toil rsync-cluster <cluster-name> setup_leaderNode.sh :/tmp
+	(venv) $ toil rsync-cluster <cluster-name> blockTrim1.xml :/tmp
+	(venv) $ toil rsync-cluster <cluster-name> blockTrim3.xml :/tmp
+
+#. Log into the leader node. ::
+
+	(venv) $ toil ssh-cluster <cluster-name>
+
+#. Set up the environment of the leader node to run Cactus. ::
+
+	$ bash /tmp/setup_leaderNode.sh
+	$ source cact_venv/bin/activate
+	(cact_venv) $ cd cactus
+	(cact_venv) $ pip install --upgrade .
+
+#. Run `Cactus <https://github.com/ComparativeGenomicsToolkit/cactus>`__ as an autoscaling workflow. ::
+
+	(cact_venv) $ TOIL_APPLIANCE_SELF=quay.io/ucsc_cgl/toil:3.11.0 cactus --provisioner aws \
+	--nodeTypes c3.4xlarge --maxNodes 2 --minNodes 0 --retry 10 --batchSystem mesos --disableCaching \
+	--logDebug --logFile /logFile_pestis3 --configFile /tmp/blockTrim3.xml aws:us-west-2:cactus-pestis \
+	/tmp/pestis-short-aws-seqFile.txt /tmp/pestis_output3.hal
+
+
+   .. note::
+
+    In this example, we specify the version of Toil to be 3.11.0; if the latest one is desired, please eliminate ``TOIL_APPLIANCE_SELF=quay.io/ucsc_cgl/toil:3.11.0``. The flag ``--maxNodes 2`` creates up to two instances of type `c3.4xlarge` and launches Mesos slave containers inside them. The flag ``--logDebug`` is equal to ``--logLevel DEBUG``. ``--logFile /logFile_pestis3``: Write log in a file named `logFile_pestis3` under ``/`` folder. The ``--configFile`` flag is not required, depending on whether a specific configuration file is intended to run the alignment. Toil creates a bucket in S3 called `aws:us-west-2:cactus-pestis` to store intermediate job files and metadata. The result file, named ``pestis_output3.hal``, is stored under ``/tmp`` folder of the leader node. Use ``cactus --help`` to see all the Cactus and Toil flags available.
+
+#. Log out of the leader node. ::
+
+	(cact_venv) $ exit
+
+#. Download the resulted output to local machine. ::
+
+	(venv) $ toil rsync-cluster <cluster-name> :/tmp/pestis_output3.hal <path-of-folder-on-local-machine>
+
+#. Destroy the cluster. ::
+
+      	(venv) $ toil destroy-cluster <cluster-name>
