@@ -7,7 +7,7 @@ Toil Workflow Options and Command Line Interface
 
 The ``toil`` CLI supports the following commands as arguments:
 
-	``status`` - Reports runtime and resource usage for all jobs in a specified jobstore (workflow must have originally been run using the --stats option).
+	``status`` - Reports runtime and resource usage for all jobs in a specified jobstore
 
 	``stats`` - Inspects a job store to see which jobs have failed, run successfully, etc.
 
