@@ -11,32 +11,35 @@ The ``toil`` CLI supports the following commands as arguments:
 
     **Example**: ``toil status file:my-job-store``
     
+.. code-block:: python
+
     Batch System: singleMachine
     Default Cores: 1  Default Memory: 2097152K
     Max Cores: 9.22337e+18
     Total Clock: 0.56  Total Runtime: 1.01
     Worker
-        Count |                                    Time* |                                    Clock |                                     Wait |                                   Memory 
-            n |      min    med*     ave     max   total |      min     med     ave     max   total |      min     med     ave     max   total |      min     med     ave     max   total 
+        Count |                                    Time* |                                    Clock |                                     Wait |                                   Memory
+            n |      min    med*     ave     max   total |      min     med     ave     max   total |      min     med     ave     max   total |      min     med     ave     max   total
             1 |     0.14    0.14    0.14    0.14    0.14 |     0.13    0.13    0.13    0.13    0.13 |     0.01    0.01    0.01    0.01    0.01 |      76K     76K     76K     76K     76K
     Job
      Worker Jobs  |     min    med    ave    max
                   |       3      3      3      3
-        Count |                                    Time* |                                    Clock |                                     Wait |                                   Memory 
-            n |      min    med*     ave     max   total |      min     med     ave     max   total |      min     med     ave     max   total |      min     med     ave     max   total 
+        Count |                                    Time* |                                    Clock |                                     Wait |                                   Memory
+            n |      min    med*     ave     max   total |      min     med     ave     max   total |      min     med     ave     max   total |      min     med     ave     max   total
             3 |     0.01    0.06    0.05    0.07    0.14 |     0.00    0.06    0.04    0.07    0.12 |     0.00    0.01    0.00    0.01    0.01 |      76K     76K     76K     76K    229K
      SystemDiskUsage
-        Count |                                    Time* |                                    Clock |                                     Wait |                                   Memory 
-            n |      min    med*     ave     max   total |      min     med     ave     max   total |      min     med     ave     max   total |      min     med     ave     max   total 
+        Count |                                    Time* |                                    Clock |                                     Wait |                                   Memory
+            n |      min    med*     ave     max   total |      min     med     ave     max   total |      min     med     ave     max   total |      min     med     ave     max   total
             1 |     0.01    0.01    0.01    0.01    0.01 |     0.00    0.00    0.00    0.00    0.00 |     0.01    0.01    0.01    0.01    0.01 |      76K     76K     76K     76K     76K
      UserDiskUsage
-        Count |                                    Time* |                                    Clock |                                     Wait |                                   Memory 
-            n |      min    med*     ave     max   total |      min     med     ave     max   total |      min     med     ave     max   total |      min     med     ave     max   total 
+        Count |                                    Time* |                                    Clock |                                     Wait |                                   Memory
+            n |      min    med*     ave     max   total |      min     med     ave     max   total |      min     med     ave     max   total |      min     med     ave     max   total
             1 |     0.06    0.06    0.06    0.06    0.06 |     0.06    0.06    0.06    0.06    0.06 |     0.01    0.01    0.01    0.01    0.01 |      76K     76K     76K     76K     76K
      DiskUsage
-        Count |                                    Time* |                                    Clock |                                     Wait |                                   Memory 
-            n |      min    med*     ave     max   total |      min     med     ave     max   total |      min     med     ave     max   total |      min     med     ave     max   total 
+        Count |                                    Time* |                                    Clock |                                     Wait |                                   Memory
+            n |      min    med*     ave     max   total |      min     med     ave     max   total |      min     med     ave     max   total |      min     med     ave     max   total
             1 |     0.07    0.07    0.07    0.07    0.07 |     0.07    0.07    0.07    0.07    0.07 |     0.00    0.00    0.00    0.00    0.00 |      76K     76K     76K     76K     76K
+
 
 	``stats`` - Reports statistical data about a given Toil workflow.
 
