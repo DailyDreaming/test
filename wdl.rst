@@ -8,12 +8,19 @@ Toil Workflow Options and Command Line Interface
 The ``toil`` CLI supports the following commands as arguments:
 
 	``status`` - Reports runtime and resource usage for all jobs in a specified jobstore (workflow must have originally been run using the --stats option).
+	
 	``stats`` - Inspects a job store to see which jobs have failed, run successfully, etc.
+	
 	``destroy-cluster`` - For autoscaling.  Terminates the specified cluster and associated resources.
+	
 	``launch-cluster`` - For autoscaling.  This is used to launch a toil leader instance with the specified provisioner.
+	
 	``rsync-cluster`` - For autoscaling.  Used to transfer files to a cluster launched with ``toil launch-cluster``.
+	
 	``kill`` - Kills any running jobs trees in a rogue toil.
+	
 	``clean`` - Delete the job store used by a previous Toil workflow invocation.
+	
 	``ssh-cluster`` - SSHs into the toil appliance container running on the leader of the cluster.
 
 Status
