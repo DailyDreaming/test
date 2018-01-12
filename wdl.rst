@@ -7,10 +7,68 @@ Toil Workflow Options and Command Line Interface
 
 The ``toil`` CLI supports the following commands as arguments:
 
-	``status`` - Reports the state of a Toil workflow that was run using the --stats option.
+	``status`` - Reports runtime and resource usage for all jobs in a specified jobstore (workflow must have originally been run using the --stats option).
+	``stats`` - Inspects a job store to see which jobs have failed, run successfully, etc.
+	``destroy-cluster`` - For autoscaling.  Terminates the specified cluster and associated resources.
+	``launch-cluster`` - For autoscaling.  This is used to launch a toil leader instance with the specified provisioner.
+	``rsync-cluster`` - For autoscaling.  Used to transfer files to a cluster launched with ``toil launch-cluster``.
+	``kill`` - Kills any running jobs trees in a rogue toil.
+	``clean`` - Delete the job store used by a previous Toil workflow invocation.
+	``ssh-cluster`` - SSHs into the toil appliance container running on the leader of the cluster.
 
-    **Example**: ``toil status file:my-job-store``
-    
+Status
+------
+
+To use the status command, a workflow must first be run using the ``--stats`` option.
+
+An example of this would be running the following::
+
+    toil discoverfiles.py file:my-jobstore --stats
+
+Where ``discoverfiles.py`` is the following:
+
+.. code-block:: python
+
+    import subprocess
+    from toil.common import Toil
+    from toil.job import Job
+
+    class discoverFiles(Job):
+        """Views files at a specified path using ls."""
+        def __init__(self, path, *args, **kwargs):
+            self.path = path
+            super(discoverFiles, self).__init__(*args, **kwargs)
+
+        def run(self, fileStore):
+            subprocess.check_call(["ls", self.path])
+
+    def main():
+        options = Job.Runner.getDefaultArgumentParser().parse_args()
+
+        job1 = discoverFiles(path="/", displayName='sysFiles')
+        job2 = discoverFiles(path="/home/lifeisaboutfishtacos", displayName='userFiles')
+        job3 = discoverFiles(path="/home/andbeeftacos")
+
+        job1.addChild(job2)
+        job2.addChild(job3)
+
+        with Toil(options) as toil:
+            if not toil.options.restart:
+                toil.start(job1)
+            else:
+                toil.restart()
+
+    if __name__ == '__main__':
+        main()
+
+Notice the ``displayName`` key, which can rename a job, giving it an alias when it is finally displayed in stats.
+Running this workflow file should record three job names then: ``sysFiles`` (job1), ``userFiles`` (job2), and ``discoverFiles`` (job3).
+To see the runtime and resources used for each job when it was run, type::
+
+    toil stats file:my-jobstore
+
+This should output the following:
+
 .. code-block:: python
 
     Batch System: singleMachine
@@ -27,33 +85,18 @@ The ``toil`` CLI supports the following commands as arguments:
         Count |                                    Time* |                                    Clock |                                     Wait |                                   Memory
             n |      min    med*     ave     max   total |      min     med     ave     max   total |      min     med     ave     max   total |      min     med     ave     max   total
             3 |     0.01    0.06    0.05    0.07    0.14 |     0.00    0.06    0.04    0.07    0.12 |     0.00    0.01    0.00    0.01    0.01 |      76K     76K     76K     76K    229K
-     SystemDiskUsage
+     sysFiles
         Count |                                    Time* |                                    Clock |                                     Wait |                                   Memory
             n |      min    med*     ave     max   total |      min     med     ave     max   total |      min     med     ave     max   total |      min     med     ave     max   total
             1 |     0.01    0.01    0.01    0.01    0.01 |     0.00    0.00    0.00    0.00    0.00 |     0.01    0.01    0.01    0.01    0.01 |      76K     76K     76K     76K     76K
-     UserDiskUsage
+     userFiles
         Count |                                    Time* |                                    Clock |                                     Wait |                                   Memory
             n |      min    med*     ave     max   total |      min     med     ave     max   total |      min     med     ave     max   total |      min     med     ave     max   total
             1 |     0.06    0.06    0.06    0.06    0.06 |     0.06    0.06    0.06    0.06    0.06 |     0.01    0.01    0.01    0.01    0.01 |      76K     76K     76K     76K     76K
-     DiskUsage
+     discoverFiles
         Count |                                    Time* |                                    Clock |                                     Wait |                                   Memory
             n |      min    med*     ave     max   total |      min     med     ave     max   total |      min     med     ave     max   total |      min     med     ave     max   total
             1 |     0.07    0.07    0.07    0.07    0.07 |     0.07    0.07    0.07    0.07    0.07 |     0.00    0.00    0.00    0.00    0.00 |      76K     76K     76K     76K     76K
-
-
-	``stats`` - Reports statistical data about a given Toil workflow.
-
-	``rsync-cluster`` - Rsyncs into the toil appliance container running on the leader of the cluster.
-
-	``launch-cluster`` - Launches a toil leader instance with the specified provisioner.
-
-	``destroy-cluster`` - Terminates the specified cluster and associated resources.
-
-	``kill`` - Kills any running jobs trees in a rogue toil.
-
-	``clean`` - Delete the job store used by a previous Toil workflow invocation.
-
-	``ssh-cluster`` - SSHs into the toil appliance container running on the leader of the cluster.
 
 
 Toil also provides several command line options when running a toil script (see :ref:`running`),
