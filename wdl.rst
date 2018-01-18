@@ -26,7 +26,7 @@ Modify docker so that sudo is not needed for root::
     sudo usermod -aG docker ${USER}
     sudo su - ${USER}
 
-Install pip, a virtualenv, the dev version of toil, and the requisite pip installs (cwltool, schema-salad, avro, synapse, and html5lib)::
+Install pip, a virtualenv, the dev version of toil, and the requisite pip installs::
 
     sudo apt install -y python-pip
     sudo pip install --upgrade pip
