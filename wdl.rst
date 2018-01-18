@@ -37,7 +37,8 @@ Install pip, a virtualenv, the dev version of toil, and the requisite pip instal
     source /home/ubuntu/toil/dev/bin/activate
     make prepare
     make develop extras=[aws,mesos,azure,google,encryption,cwl]
-    pip install cwl-runner schema-salad==2.6.20170630075932 avro==1.8.1 cwltool==1.0.20170822192924 ruamel.yaml==0.14.12 --no-cache-dir
+    pip install cwl-runner schema-salad==2.6.20170630075932 
+    pip install avro==1.8.1 cwltool==1.0.20170822192924 ruamel.yaml==0.14.12 --no-cache-dir
     pip install synapseclient --no-cache-dir
     pip install html5lib cwltest
     cd ..
@@ -53,4 +54,4 @@ After pasting a username and password into `.synapseConfig`, download the data f
 Run the main bcbio workflow::
 
     cd NA12878-platinum-chr20-workflow
-    toil-cwl-runner NA12878-platinum-chr20-workflowmain-NA12878-platinum-chr20.cwl NA12878-platinum-chr20-workflow/main-NA12878-platinum-chr20-samples.json
+    toil-cwl-runner NA12878-platinum-chr20-workflow/main-NA12878-platinum-chr20.cwl NA12878-platinum-chr20-workflow/main-NA12878-platinum-chr20-samples.json
