@@ -33,7 +33,7 @@ Install pip, a virtualenv, the dev version of toil, and the requisite pip instal
     sudo pip install virtualenv
     git clone https://github.com/BD2KGenomics/toil.git
     cd toil
-    virtualenv --python /usr/bin/python2 dev
+    virtualenv --python /usr/bin/python2.7 dev
     source /home/ubuntu/toil/dev/bin/activate
     make prepare
     make develop extras=[aws,mesos,azure,google,encryption,cwl]
