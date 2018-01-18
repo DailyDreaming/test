@@ -5,7 +5,7 @@ Derived from the GA4GH DREAM Challenge: `https://www.synapse.org/#!Synapse:syn97
 
 These are directions for running bcbio in toil.
 
-**Workflow was run with a fresh AWS EC2 (Ubuntu 16.04 Server) instance of type t2.2xlarge with one node, mounted with a 200 Gb EFS volume (EC2 wizard in firefox).**
+**Workflow was run with a fresh AWS EC2 (Ubuntu 16.04 Server) instance of type t2.2xlarge (8 CPU; 32 Gb RAM) with one node, mounted with a 200 Gb EFS volume (EC2 wizard in firefox).**
 
 Update the instance::
 
