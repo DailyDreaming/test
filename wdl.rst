@@ -47,7 +47,13 @@ I created a copy of my Synapse credentials in .synapseConfig (synapse hosts the 
 
     nano .synapseConfig
 
-After pasting a username and password into `.synapseConfig`, download the data from Synapse::
+After pasting a username and password into `.synapseConfig`::
+
+    [authentication]
+    username: email@ucsc.edu
+    password: password
+
+Download the data from Synapse::
 
     synapse get -r syn9725771
 
