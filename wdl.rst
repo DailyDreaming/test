@@ -1,9 +1,16 @@
 BCBIO Workflow
 ==============
 
-Derived from the GA4GH DREAM Challenge: `https://www.synapse.org/#!Synapse:syn9725771` and originally submitted by "Brad Chapman"_.
+Derived from the GA4GH DREAM Challenge: `https://www.synapse.org/#!Synapse:syn9725771` and originally submitted by `Brad Chapman`__.
 
-.. _"Brad Chapman": http://www.python.org/https://github.com/chapmanb
+.. _Brad Chapman: http://www.python.org/https://github.com/chapmanb
+
+Python_ is `my favourite
+programming language`__.
+
+.. _Python: http://www.python.org/
+
+__ Python_ 
 
 These are directions for running bcbio in toil.
 
