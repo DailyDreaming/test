@@ -36,7 +36,7 @@ Install pip, a virtualenv, the dev version of toil, and the requisite pip instal
     virtualenv --python /usr/bin/python2 dev
     source /home/ubuntu/toil/dev/bin/activate
     make prepare
-    make develop
+    make develop extras=[aws,mesos,azure,google,encryption,cwl]
     pip install cwl-runner schema-salad==2.6.20170630075932 avro==1.8.1 cwltool==1.0.20170822192924 ruamel.yaml==0.14.12 --no-cache-dir
     pip install synapseclient --no-cache-dir
     pip install html5lib cwltest
