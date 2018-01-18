@@ -1,3 +1,10 @@
+BCBIO Workflow
+==============
+
+Derived from the GA4GH DREAM Challenge: `https://www.synapse.org/#!Synapse:syn9725771`
+
+These are directions for running bcbio in toil.
+
 **Workflow was run with a fresh AWS EC2 (Ubuntu 16.04 Server) instance of type t2.2xlarge with one node, mounted with a 200 Gb EFS volume (EC2 wizard in firefox).**
 
 Update the instance::
@@ -35,18 +42,13 @@ Install pip, a virtualenv, the dev version of toil, and the requisite pip instal
     pip install html5lib cwltest
     cd ..
 
-I created a copy of my Synapse credentials in .synapseConfig::
+I created a copy of my Synapse credentials in .synapseConfig (synapse hosts the data files needed to run the workflow)::
 
     nano .synapseConfig
 
-Download data from Synapse::
+After pasting a username and password into `.synapseConfig`, download the data from Synapse::
 
     synapse get -r syn9725771
-
-I used the synapse get command to download the synapse-get and synapse-submit CWL tools as well as the JSON parameters to download data for the bcbio_NA12878-chr20 workflow, and then modify the get file::
-
-    synapse get -r syn9689286
-    synapse get -r syn9689284
 
 Run the main bcbio workflow::
 
