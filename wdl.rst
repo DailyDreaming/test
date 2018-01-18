@@ -1,7 +1,7 @@
 BCBIO Workflow
 ==============
 
-Derived from the GA4GH DREAM Challenge: `https://www.synapse.org/#!Synapse:syn9725771` and originally submitted by `Brad Chapman`_.
+Derived from the GA4GH DREAM Challenge workflow: `https://www.synapse.org/#!Synapse:syn9725771` originally submitted by `Brad Chapman`_.
 
 .. _Brad Chapman: https://github.com/chapmanb
 
