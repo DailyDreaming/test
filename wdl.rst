@@ -2,12 +2,35 @@
 
 .. _workflowOptions:
 
-Options in Toil
-===============
+Options
+=======
 
-A quick way to see all of Toil's CLI options is by executing::
+A quick way to see all of Toil's commandline options is by executing::
 
-    $ toil --help
+    $ toil a_toil_workflow.py--help
+
+For a basic toil workflow, Toil has one mandatory argument, the job store.  All other arguments are optional.
+
+The Job Store
+-------------
+
+Running toil scripts requires a filepath or url to a centralizing location for all of the files of the workflow.
+This is Toil's one required positional argument: the job store.  To use the :ref:`quick start <quickstart>` example,
+if you're on a node that has a large **/scratch** volume, you can specify that the jobstore be created there by
+executing: ``python HelloWorld.py /scratch/my-job-store``, or more explicitly,
+``python HelloWorld.py file:/scratch/my-job-store``.
+
+Syntax for specifying different job stores:
+
+    Local: ``file:job-store-name``
+
+    AWS: ``aws:region-here:job-store-name``
+
+    Azure: ``azure:account-name-here:job-store-name``
+
+    Google: ``google:projectID-here:job-store-name``
+
+Different types of job store options can be found below.
 
 .. _optionsRef:
 
@@ -16,23 +39,6 @@ Commandline Options
 
 **Core Toil Options**
 
-  jobStore              The location of the job store for the workflow. A job
-                        store holds persistent information about the jobs and
-                        files in a workflow. If the workflow is run with a
-                        distributed batch system, the job store must be
-                        accessible by all worker nodes. Depending on the
-                        desired job store implementation, the location should
-                        be formatted according to one of the following
-                        schemes: file:<path> where <path> points to a
-                        directory on the file systen aws:<region>:<prefix>
-                        where <region> is the name of an AWS region like us-
-                        west-2 and <prefix> will be prepended to the names of
-                        any top-level AWS resources in use by job store, e.g.
-                        S3 buckets. azure:<account>:<prefix>
-                        google:<project_id>:<prefix> TODO: explain For
-                        backwards compatibility, you may also specify ./foo
-                        (equivalent to file:./foo or just file:foo) or /bar
-                        (equivalent to file:/bar).
   --workDir WORKDIR     Absolute path to directory where temporary files
                         generated during the Toil run should be placed. Temp
                         files and folders will be placed in a directory
@@ -82,25 +88,35 @@ the logging module, so:
 **ERROR**: Only ERROR, and CRITICAL log levels are shown.
 **CRITICAL**: Only CRITICAL log levels are shown.
 
-    ``--logOff`` - Only CRITICAL log levels are shown.  Equivalent to ``--logLevel=OFF`` or ``--logLevel=CRITICAL``.
+  --logOff
+                        Only CRITICAL log levels are shown.  Equivalent to ``--logLevel=OFF`` or ``--logLevel=CRITICAL``.
 
-    ``--logCritical`` - Only CRITICAL log levels are shown.  Equivalent to ``--logLevel=OFF`` or ``--logLevel=CRITICAL``.
+  --logCritical
+                        Only CRITICAL log levels are shown.  Equivalent to ``--logLevel=OFF`` or ``--logLevel=CRITICAL``.
 
-    ``--logError`` - Only ERROR, and CRITICAL log levels are shown.  Equivalent to ``--logLevel=ERROR``.
+  --logError
+                        Only ERROR, and CRITICAL log levels are shown.  Equivalent to ``--logLevel=ERROR``.
 
-    ``--logWarning`` - Only WARN, ERROR, and CRITICAL log levels are shown.  Equivalent to ``--logLevel=WARNING``.
+  --logWarning
+                        Only WARN, ERROR, and CRITICAL log levels are shown.  Equivalent to ``--logLevel=WARNING``.
 
-    ``--logInfo`` - All log statements are shown, except DEBUG.  Equivalent to ``--logLevel=INFO``.
+  --logInfo
+                        All log statements are shown, except DEBUG.  Equivalent to ``--logLevel=INFO``.
 
-    ``--logDebug`` - All log statements are shown.  Equivalent to ``--logLevel=DEBUG``.
+  --logDebug
+                        All log statements are shown.  Equivalent to ``--logLevel=DEBUG``.
 
-    ``--logLevel=LOGLEVEL`` - ``LOGLEVEL`` may be set to: ``OFF`` (or ``CRITICAL``), ``ERROR``, ``WARN`` (or ``WARNING``), ``INFO``, or ``DEBUG``.
+  --logLevel=LOGLEVEL
+                        ``LOGLEVEL`` may be set to: ``OFF`` (or ``CRITICAL``), ``ERROR``, ``WARN`` (or ``WARNING``), ``INFO``, or ``DEBUG``.
 
-    ``--logFile FILEPATH`` - Specifies a file path to write the logging output to.
+  --logFile FILEPATH
+                        Specifies a file path to write the logging output to.
 
-    ``--rotatingLogging`` - Turn on rotating logging, which prevents log files from getting too big (set using ``--maxLogFileSize BYTESIZE``).
+  --rotatingLogging
+                        Turn on rotating logging, which prevents log files from getting too big (set using ``--maxLogFileSize BYTESIZE``).
 
-    ``--maxLogFileSize BYTESIZE`` - Sets the maximum log file size in bytes (``--rotatingLogging`` must be active).
+  --maxLogFileSize BYTESIZE
+                        Sets the maximum log file size in bytes (``--rotatingLogging`` must be active).
 
 **Batch System Options**
 
@@ -306,26 +322,6 @@ can all be changed using:
     ``--defaultMemory`` changes the default RAM that should be allocated per job.  Normally 2G.
 
 Standard suffixes like K, Ki, M, Mi, G or Gi are supported.
-
-Job Store
----------
-Running toil scripts has one required positional argument: the job store.  The default job store is just a path
-to where the user would like the job store to be created. To use the :ref:`quick start <quickstart>` example,
-if you're on a node that has a large **/scratch** volume, you can specify the jobstore be created there by
-executing: ``python HelloWorld.py /scratch/my-job-store``, or more explicitly,
-``python HelloWorld.py file:/scratch/my-job-store``.
-
-Syntax for specifying different job stores:
-
-    Local: ``file:job-store-name``
-
-    AWS: ``aws:region-here:job-store-name``
-
-    Azure: ``azure:account-name-here:job-store-name``
-
-    Google: ``google:projectID-here:job-store-name``
-
-Different types of job store options can be found in :ref:`jobStoreInterface`.
 
 Miscellaneous
 -------------
