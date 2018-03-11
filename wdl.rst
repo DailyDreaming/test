@@ -80,13 +80,7 @@ Commandline Options
 **Logging Options**
 
 Toil hides stdout and stderr by default except in case of job failure.  Log levels in toil are based on priority from
-the logging module, so::
-
-    **DEBUG**: All log statements are shown.
-    **INFO**: All log statements are shown, except DEBUG.
-    **WARN**: Only WARN, ERROR, and CRITICAL log levels are shown.
-    **ERROR**: Only ERROR, and CRITICAL log levels are shown.
-    **CRITICAL**: Only CRITICAL log levels are shown.
+the logging module, so:
 
   --logOff
                         Only CRITICAL log levels are shown.
