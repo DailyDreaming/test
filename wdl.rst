@@ -89,31 +89,39 @@ the logging module, so:
 **CRITICAL**: Only CRITICAL log levels are shown.
 
   --logOff
-                        Only CRITICAL log levels are shown.  Equivalent to ``--logLevel=OFF`` or ``--logLevel=CRITICAL``.
+                        Only CRITICAL log levels are shown.
+                        Equivalent to ``--logLevel=OFF`` or ``--logLevel=CRITICAL``.
 
   --logCritical
-                        Only CRITICAL log levels are shown.  Equivalent to ``--logLevel=OFF`` or ``--logLevel=CRITICAL``.
+                        Only CRITICAL log levels are shown.
+                        Equivalent to ``--logLevel=OFF`` or ``--logLevel=CRITICAL``.
 
   --logError
-                        Only ERROR, and CRITICAL log levels are shown.  Equivalent to ``--logLevel=ERROR``.
+                        Only ERROR, and CRITICAL log levels are shown.
+                        Equivalent to ``--logLevel=ERROR``.
 
   --logWarning
-                        Only WARN, ERROR, and CRITICAL log levels are shown.  Equivalent to ``--logLevel=WARNING``.
+                        Only WARN, ERROR, and CRITICAL log levels are shown.
+                        Equivalent to ``--logLevel=WARNING``.
 
   --logInfo
-                        All log statements are shown, except DEBUG.  Equivalent to ``--logLevel=INFO``.
+                        All log statements are shown, except DEBUG.
+                        Equivalent to ``--logLevel=INFO``.
 
   --logDebug
-                        All log statements are shown.  Equivalent to ``--logLevel=DEBUG``.
+                        All log statements are shown.
+                        Equivalent to ``--logLevel=DEBUG``.
 
   --logLevel=LOGLEVEL
-                        ``LOGLEVEL`` may be set to: ``OFF`` (or ``CRITICAL``), ``ERROR``, ``WARN`` (or ``WARNING``), ``INFO``, or ``DEBUG``.
+                        ``LOGLEVEL`` may be set to: ``OFF`` (or ``CRITICAL``),
+                        ``ERROR``, ``WARN`` (or ``WARNING``), ``INFO``, or ``DEBUG``.
 
   --logFile FILEPATH
                         Specifies a file path to write the logging output to.
 
   --rotatingLogging
-                        Turn on rotating logging, which prevents log files from getting too big (set using ``--maxLogFileSize BYTESIZE``).
+                        Turn on rotating logging, which prevents log files from
+                        getting too big (set using ``--maxLogFileSize BYTESIZE``).
 
   --maxLogFileSize BYTESIZE
                         Sets the maximum log file size in bytes (``--rotatingLogging`` must be active).
