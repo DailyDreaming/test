@@ -1,9 +1,15 @@
+.. _commandRef:
+
+.. _workflowOptions:
+
 Options in Toil
 ===============
 
 A quick way to see all of Toil's CLI options is by executing::
 
     $ toil --help
+
+.. _optionsRef:
 
 Commandline Options
 -------------------
@@ -277,3 +283,139 @@ the logging module, so:
   --servicePollingInterval SERVICEPOLLINGINTERVAL
                         Interval of time service jobs wait between polling for
                         the existence of the keep-alive flag (defailt=60)
+
+Restart Option
+--------------
+In the event of failure, Toil can resume the pipeline by adding the argument ``--restart`` and rerunning the
+python script. Toil pipelines can even be edited and resumed which is useful for development or troubleshooting.
+
+Batch System Option
+-------------------
+Toil supports several different batch systems using the ``--batchSystem`` argument.
+More information in the :ref:`batchsysteminterface`.
+
+Default Resource Options
+-------------------------------
+Toil uses resource requirements to intelligently schedule jobs. The defaults for cores (1), disk (2G), and memory (2G),
+can all be changed using:
+
+    ``--defaultCores`` changes the default number of cores that should be allocated per job.  Normally 1.
+
+    ``--defaultDisk`` changes the default disk space that should be allocated per job.  Normally 2G.
+
+    ``--defaultMemory`` changes the default RAM that should be allocated per job.  Normally 2G.
+
+Standard suffixes like K, Ki, M, Mi, G or Gi are supported.
+
+Job Store
+---------
+Running toil scripts has one required positional argument: the job store.  The default job store is just a path
+to where the user would like the job store to be created. To use the :ref:`quick start <quickstart>` example,
+if you're on a node that has a large **/scratch** volume, you can specify the jobstore be created there by
+executing: ``python HelloWorld.py /scratch/my-job-store``, or more explicitly,
+``python HelloWorld.py file:/scratch/my-job-store``.
+
+Syntax for specifying different job stores:
+
+    Local: ``file:job-store-name``
+
+    AWS: ``aws:region-here:job-store-name``
+
+    Azure: ``azure:account-name-here:job-store-name``
+
+    Google: ``google:projectID-here:job-store-name``
+
+Different types of job store options can be found in :ref:`jobStoreInterface`.
+
+Miscellaneous
+-------------
+Here are some additional useful arguments that don't fit into another category.
+
+* ``--workDir`` sets the location where temporary directories are created for running jobs.
+* ``--retryCount`` sets the number of times to retry a job in case of failure. Useful for non-systemic failures like HTTP requests.
+* ``--sseKey`` accepts a path to a 32-byte key that is used for server-side encryption when using the AWS job store.
+* ``--cseKey`` accepts a path to a 256-bit key to be used for client-side encryption on Azure job store.
+* ``--setEnv <NAME=VALUE>`` sets an environment variable early on in the worker
+
+For implementation-specific flags for schedulers like timelimits, queues, accounts, etc.. An environment variable can be
+defined before launching the Job, i.e:
+
+.. code-block:: console
+
+    export TOIL_SLURM_ARGS="-t 1:00:00 -q fatq"
+
+Running Workflows with Services
+-------------------------------
+
+Toil supports jobs, or clusters of jobs, that run as *services* to other
+*accessor* jobs. Example services include server databases or Apache Spark
+Clusters. As service jobs exist to provide services to accessor jobs their
+runtime is dependent on the concurrent running of their accessor jobs. The dependencies
+between services and their accessor jobs can create potential deadlock scenarios,
+where the running of the workflow hangs because only service jobs are being
+run and their accessor jobs can not be scheduled because of too limited resources
+to run both simultaneously. To cope with this situation Toil attempts to
+schedule services and accessors intelligently, however to avoid a deadlock
+with workflows running service jobs it is advisable to use the following parameters:
+
+* ``--maxServiceJobs`` The maximum number of service jobs that can be run concurrently, excluding service jobs running on preemptable nodes.
+* ``--maxPreemptableServiceJobs`` The maximum number of service jobs that can run concurrently on preemptable nodes.
+
+Specifying these parameters so that at a maximum cluster size there will be
+sufficient resources to run accessors in addition to services will ensure that
+such a deadlock can not occur.
+
+If too low a limit is specified then a deadlock can occur in which toil can
+not schedule sufficient service jobs concurrently to complete the workflow.
+Toil will detect this situation if it occurs and throw a
+:class:`toil.DeadlockException` exception. Increasing the cluster size
+and these limits will resolve the issue.
+
+Setting Options directly with the Toil Script
+---------------------------------------------
+
+It's good to remember that CLI options can be overridden in the Toil script itself.  For example,
+:func:`toil.job.Job.Runner.getDefaultOptions`:: can be used to run toil with all default options, and in this example,
+it will override commandline args to run the default options and always run with the "./toilWorkflow" directory
+specified as the jobstore.
+
+.. code-block:: python
+
+    options = Job.Runner.getDefaultOptions("./toilWorkflow") # Get the options object
+
+    with Toil(options) as toil:
+        toil.start(Job())  # Run the script
+
+However, each option can be explicitly set within the script by supplying arguments (in this example, we are setting
+``logLevel = "DEBUG"`` (all log statements are shown) and ``clean = "ALWAYS"`` (always delete the jobstore) like so:
+
+.. code-block:: python
+
+    options = Job.Runner.getDefaultOptions("./toilWorkflow") # Get the options object
+    options.logLevel = "DEBUG" # Set the log level to the debug level.
+    options.clean = "ALWAYS" # Always delete the jobStore after a run
+
+    with Toil(options) as toil:
+        toil.start(Job())  # Run the script
+
+However, the usual incantation is to accept commandline args from the user with the following:
+
+.. code-block:: python
+
+    parser = Job.Runner.getDefaultArgumentParser() # Get the parser
+    options = parser.parse_args() # Parse user args to create the options object
+
+    with Toil(options) as toil:
+        toil.start(Job())  # Run the script
+
+Which can also, of course, then accept script supplied arguments as before (which will overwrite any user supplied args):
+
+.. code-block:: python
+
+    parser = Job.Runner.getDefaultArgumentParser() # Get the parser
+    options = parser.parse_args() # Parse user args to create the options object
+    options.logLevel = "DEBUG" # Set the log level to the debug level.
+    options.clean = "ALWAYS" # Always delete the jobStore after a run
+
+    with Toil(options) as toil:
+        toil.start(Job())  # Run the script
