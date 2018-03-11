@@ -7,7 +7,7 @@ Options
 
 A quick way to see all of Toil's commandline options is by executing::
 
-    $ toil a_toil_workflow.py--help
+    $ toil example.py --help
 
 For a basic toil workflow, Toil has one mandatory argument, the job store.  All other arguments are optional.
 
@@ -49,7 +49,7 @@ Commandline Options
                         on all machines running jobs.
   --stats               Records statistics about the toil workflow to be used
                         by 'toil stats'.
-  --clean STATE
+  --clean=STATE
                         Determines the deletion of the jobStore upon
                         completion of the program. Choices: 'always',
                         'onError','never', or 'onSuccess'. The --stats option
