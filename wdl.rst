@@ -49,16 +49,16 @@ Commandline Options
                         on all machines running jobs.
   --stats               Records statistics about the toil workflow to be used
                         by 'toil stats'.
-  --clean {always,onError,never,onSuccess}
+  --clean STATE
                         Determines the deletion of the jobStore upon
                         completion of the program. Choices: 'always',
-                        'onError','never', 'onSuccess'. The --stats option
+                        'onError','never', or 'onSuccess'. The --stats option
                         requires information from the jobStore upon completion
                         so the jobStore will never be deleted withthat flag.
                         If you wish to be able to restart the run, choose
                         'never' or 'onSuccess'. Default is 'never' if stats is
                         enabled, and 'onSuccess' otherwise
-  --cleanWorkDir {always,never,onSuccess,onError}
+  --cleanWorkDir STATE
                         Determines deletion of temporary worker directory upon
                         completion of a job. Choices: 'always', 'never',
                         'onSuccess'. Default = always. WARNING: This option
@@ -101,7 +101,7 @@ the logging module, so:
                         All log statements are shown.
                         Equivalent to ``--logLevel=DEBUG``.
   --logLevel=LOGLEVEL
-                        ``LOGLEVEL`` may be set to: ``OFF`` (or ``CRITICAL``),
+                        May be set to: ``OFF`` (or ``CRITICAL``),
                         ``ERROR``, ``WARN`` (or ``WARNING``), ``INFO``, or ``DEBUG``.
   --logFile FILEPATH
                         Specifies a file path to write the logging output to.
