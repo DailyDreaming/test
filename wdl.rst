@@ -5,7 +5,7 @@
 Options
 =======
 
-A quick way to see all of Toil's commandline options is by executing::
+A quick way to see all of Toil's commandline options is by executing the following on a toil script::
 
     $ toil example.py --help
 
@@ -198,7 +198,7 @@ the logging module, so:
                         Only applicable to jobs that do not specify an
                         explicit value for this requirement. Standard suffixes
                         like K, Ki, M, Mi, G or Gi are supported. Default is
-                        2.0 Gi
+                        2.0G
   --defaultCores FLOAT  The default number of CPU cores to dedicate a job.
                         Only applicable to jobs that do not specify an
                         explicit value for this requirement. Fractions of a
@@ -209,7 +209,7 @@ the logging module, so:
                         Only applicable to jobs that do not specify an
                         explicit value for this requirement. Standard suffixes
                         like K, Ki, M, Mi, G or Gi are supported. Default is
-                        2.0 Gi
+                        2.0G
   --maxCores INT        The maximum number of CPU cores to request from the
                         batch system at any one time. Standard suffixes like
                         K, Ki, M, Mi, G or Gi are supported.
@@ -247,7 +247,7 @@ the logging module, so:
                         query for job state. Return cached results if within
                         the waiting period.
 
-  Miscellaneous options
+  **Miscellaneous Options**
 
   --disableCaching      Disables caching in the file store. This flag must be
                         set to use a batch system that does not support
@@ -261,7 +261,7 @@ the logging module, so:
                         last X bytes. Setting this option to zero will prevent
                         any truncation. Setting this option to a negative
                         value will truncate from the beginning.Default=62.5 K
-  --writeLogs [WRITELOGS]
+  --writeLogs FILEPATH
                         Write worker logs received by the leader into their
                         own files at the specified path. The current working
                         directory will be used if a path is not specified
@@ -270,7 +270,7 @@ the logging module, so:
                         to get logs back from successful jobs, and adjust
                         'maxLogFileSize' to control the truncation limit for
                         worker logs.
-  --writeLogsGzip [WRITELOGSGZIP]
+  --writeLogsGzip FILEPATH
                         Identical to --writeLogs except the logs files are
                         gzipped on the leader.
   --realTimeLogging     Enable real-time logging from workers to masters
@@ -297,41 +297,6 @@ Restart Option
 --------------
 In the event of failure, Toil can resume the pipeline by adding the argument ``--restart`` and rerunning the
 python script. Toil pipelines can even be edited and resumed which is useful for development or troubleshooting.
-
-Batch System Option
--------------------
-Toil supports several different batch systems using the ``--batchSystem`` argument.
-More information in the :ref:`batchsysteminterface`.
-
-Default Resource Options
--------------------------------
-Toil uses resource requirements to intelligently schedule jobs. The defaults for cores (1), disk (2G), and memory (2G),
-can all be changed using:
-
-    ``--defaultCores`` changes the default number of cores that should be allocated per job.  Normally 1.
-
-    ``--defaultDisk`` changes the default disk space that should be allocated per job.  Normally 2G.
-
-    ``--defaultMemory`` changes the default RAM that should be allocated per job.  Normally 2G.
-
-Standard suffixes like K, Ki, M, Mi, G or Gi are supported.
-
-Miscellaneous
--------------
-Here are some additional useful arguments that don't fit into another category.
-
-* ``--workDir`` sets the location where temporary directories are created for running jobs.
-* ``--retryCount`` sets the number of times to retry a job in case of failure. Useful for non-systemic failures like HTTP requests.
-* ``--sseKey`` accepts a path to a 32-byte key that is used for server-side encryption when using the AWS job store.
-* ``--cseKey`` accepts a path to a 256-bit key to be used for client-side encryption on Azure job store.
-* ``--setEnv <NAME=VALUE>`` sets an environment variable early on in the worker
-
-For implementation-specific flags for schedulers like timelimits, queues, accounts, etc.. An environment variable can be
-defined before launching the Job, i.e:
-
-.. code-block:: console
-
-    export TOIL_SLURM_ARGS="-t 1:00:00 -q fatq"
 
 Running Workflows with Services
 -------------------------------
@@ -363,7 +328,7 @@ and these limits will resolve the issue.
 Setting Options directly with the Toil Script
 ---------------------------------------------
 
-It's good to remember that CLI options can be overridden in the Toil script itself.  For example,
+It's good to remember that commandline options can be overridden in the Toil script itself.  For example,
 :func:`toil.job.Job.Runner.getDefaultOptions`:: can be used to run toil with all default options, and in this example,
 it will override commandline args to run the default options and always run with the "./toilWorkflow" directory
 specified as the jobstore.
@@ -376,7 +341,7 @@ specified as the jobstore.
         toil.start(Job())  # Run the script
 
 However, each option can be explicitly set within the script by supplying arguments (in this example, we are setting
-``logLevel = "DEBUG"`` (all log statements are shown) and ``clean = "ALWAYS"`` (always delete the jobstore) like so:
+``logLevel = "DEBUG"`` (all log statements are shown) and ``clean="ALWAYS"`` (always delete the jobstore) like so:
 
 .. code-block:: python
 
