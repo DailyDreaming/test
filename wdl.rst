@@ -30,21 +30,15 @@ during the computation of a workflow, first set up and configure an account with
 
 #. Only needed once, but AWS requires that users "subscribe" to use the `Container Linux by CoreOS AMI`_.  You will encounter errors if this is not done.
 
-#. Next, generate a key pair for AWS with the command (do NOT generate your key pair with the Amazon browser):
-
-::
+#. Next, generate a key pair for AWS with the command (do NOT generate your key pair with the Amazon browser): ::
 
         $ ssh-keygen -t rsa
 
-#. This should prompt you to save your key.  Please save it in:
-
-::
+#. This should prompt you to save your key.  Please save it in: ::
 
         ~/.ssh/id_rsa
 
-#. Now move this to where Ubuntu can see it as an authorized key:
-
-::
+#. Now move this to where Ubuntu can see it as an authorized key: ::
 
         $ cat ~/.ssh/id_rsa.pub >> ~/.ssh/authorized_keys
         $ eval `ssh-agent -s`
