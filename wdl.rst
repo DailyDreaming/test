@@ -1,1 +1,1 @@
-.. literalinclude:: t01.py
+.. include:: my_code_example.txt
