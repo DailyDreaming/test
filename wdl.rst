@@ -1,1 +1,2 @@
-.. include:: my_code_example.txt
+.. literalinclude:: t01.py
+  :language: python
