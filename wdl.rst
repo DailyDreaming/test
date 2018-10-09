@@ -1,1 +1,1 @@
-.. include:: t01.py
+.. literalinclude:: t01.py
