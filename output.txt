@@ -1,0 +1,813 @@
+Running with gitlab-runner 11.1.0 (081978aa)
+  on gitlab-runner-gitlab-runner-748bdd7c5-7zj4x 8d4e19fd
+Using Kubernetes namespace: shared-gitlab
+Using Kubernetes executor with image humancellatlas/dss-build-box ...
+Waiting for pod shared-gitlab/runner-8d4e19fd-project-1-concurrent-04k6cf to be running, status is Pending
+Running on runner-8d4e19fd-project-1-concurrent-04k6cf via gitlab-runner-gitlab-runner-748bdd7c5-7zj4x...
+Cloning repository...
+Cloning into '/HumanCellAtlas/data-store'...
+Checking out e767117d as master...
+Updating/initializing submodules...
+$ export COMMITS_URL=${GITHUB_API}/repos/HumanCellAtlas/data-store/commits
+$ if not [[ CI_COMMIT_SHA == $(http GET $COMMITS_URL sha==$CI_COMMIT_REF_NAME | jq -r '.[0]["sha"]') ]]; then exit 1; fi
+$ cp -r /HumanCellAtlas/data-store ~/data-store && cd ~/data-store
+/bin/bash: line 77: not: command not found
+$ git reset --hard HEAD
+HEAD is now at e767117 Change regex for PUT file/{uuid}. (#1926)
+$ virtualenv ~/venv
+Using base prefix '/usr'
+New python executable in /home/hca_cicd/venv/bin/python3
+Also creating executable in /home/hca_cicd/venv/bin/python
+Installing setuptools, pip, wheel...done.
+$ source ~/venv/bin/activate
+$ pip install -r requirements-dev.txt
+Collecting aegea==2.2.6 (from -r requirements-dev.txt (line 2))
+  Downloading https://files.pythonhosted.org/packages/1d/18/cffdd84b20967e34d0b4969ce351e0c35da44613e0ff6a255139f5f1ef32/aegea-2.2.6-py2.py3-none-any.whl (257kB)
+Collecting argcomplete==1.9.4 (from -r requirements-dev.txt (line 3))
+  Downloading https://files.pythonhosted.org/packages/31/88/ba8d8684a8a27749250c66ff7c2b408fdbc29b50da61200338ff9b2607bf/argcomplete-1.9.4-py2.py3-none-any.whl
+Collecting asn1crypto==0.24.0 (from -r requirements-dev.txt (line 4))
+  Downloading https://files.pythonhosted.org/packages/ea/cd/35485615f45f30a510576f1a56d1e0a7ad7bd8ab5ed7cdc600ef7cd06222/asn1crypto-0.24.0-py2.py3-none-any.whl (101kB)
+Collecting attrs==17.4.0 (from -r requirements-dev.txt (line 5))
+  Downloading https://files.pythonhosted.org/packages/b5/60/4e178c1e790fd60f1229a9b3cb2f8bc2f4cc6ff2c8838054c142c70b5adc/attrs-17.4.0-py2.py3-none-any.whl
+Collecting aws-xray-sdk==2.2.0 (from -r requirements-dev.txt (line 6))
+  Downloading https://files.pythonhosted.org/packages/fa/af/d7b3af4b7c829c056e8ceefefd247f399a981186b75bdb6200c29a199578/aws_xray_sdk-2.2.0-py2.py3-none-any.whl (82kB)
+Collecting awscli==1.16.83 (from -r requirements-dev.txt (line 7))
+  Downloading https://files.pythonhosted.org/packages/b3/92/df77127fbefccadd30f1c9a601885a657af2a6731d530f1f908fee56fcca/awscli-1.16.83-py2.py3-none-any.whl (1.4MB)
+Collecting azure-common==1.1.16 (from -r requirements-dev.txt (line 8))
+  Downloading https://files.pythonhosted.org/packages/ac/d3/055ce7ad06459a415ff9ca210e04c6cbb51bd6564815b7c8ac34bf5a1c39/azure_common-1.1.16-py2.py3-none-any.whl
+Collecting azure-nspkg==3.0.2 (from -r requirements-dev.txt (line 9))
+  Downloading https://files.pythonhosted.org/packages/c4/0c/c562be95a9a2ed52454f598571cf300b1114d0db2aa27f5b8ed3bb9cd0c0/azure_nspkg-3.0.2-py3-none-any.whl
+Collecting azure-storage==0.36.0 (from -r requirements-dev.txt (line 10))
+  Downloading https://files.pythonhosted.org/packages/76/26/482c033f8f3a48d16cf75aad91c3e1256856719f4117fabb4696d33aa5da/azure_storage-0.36.0-py2.py3-none-any.whl (190kB)
+Collecting Babel==2.6.0 (from -r requirements-dev.txt (line 11))
+  Downloading https://files.pythonhosted.org/packages/b8/ad/c6f60602d3ee3d92fbed87675b6fb6a6f9a38c223343ababdb44ba201f10/Babel-2.6.0-py2.py3-none-any.whl (8.1MB)
+Collecting bcrypt==3.1.5 (from -r requirements-dev.txt (line 12))
+  Downloading https://files.pythonhosted.org/packages/31/4b/4057d0716e7170c29ff12e19791eb6037422620835e4a58a01d4790e56d1/bcrypt-3.1.5-cp34-abi3-manylinux1_x86_64.whl (55kB)
+Collecting boto3==1.9.73 (from -r requirements-dev.txt (line 13))
+  Downloading https://files.pythonhosted.org/packages/d8/46/30b0b04cb25a95b4c167ca874294bd6cf55e8ff2897a13741d41a2a37103/boto3-1.9.73-py2.py3-none-any.whl (128kB)
+Collecting botocore==1.12.73 (from -r requirements-dev.txt (line 14))
+  Downloading https://files.pythonhosted.org/packages/08/e6/16cf28ce4cc30bc32926250e35dcba72d7c47048fa91db131bf06c749855/botocore-1.12.73-py2.py3-none-any.whl (5.2MB)
+Collecting cachetools==3.0.0 (from -r requirements-dev.txt (line 15))
+  Downloading https://files.pythonhosted.org/packages/76/7e/08cd3846bebeabb6b1cfc4af8aae649d90249b4aeed080bddb5297f1d73b/cachetools-3.0.0-py2.py3-none-any.whl
+Collecting certifi==2018.11.29 (from -r requirements-dev.txt (line 16))
+  Downloading https://files.pythonhosted.org/packages/9f/e0/accfc1b56b57e9750eba272e24c4dddeac86852c2bebd1236674d7887e8a/certifi-2018.11.29-py2.py3-none-any.whl (154kB)
+Collecting cffi==1.11.5 (from -r requirements-dev.txt (line 17))
+  Downloading https://files.pythonhosted.org/packages/6d/c0/47db8f624f3e4e2f3f27be03a93379d1ba16a1450a7b1aacfa0366e2c0dd/cffi-1.11.5-cp36-cp36m-manylinux1_x86_64.whl (421kB)
+Collecting chalice==1.6.2 (from -r requirements-dev.txt (line 18))
+  Downloading https://files.pythonhosted.org/packages/3f/85/5112826ddd5283b97702fd5579948618ad6506402474036a717f804e6332/chalice-1.6.2-py2.py3-none-any.whl (253kB)
+Collecting chardet==3.0.4 (from -r requirements-dev.txt (line 19))
+  Downloading https://files.pythonhosted.org/packages/bc/a9/01ffebfb562e4274b6487b4bb1ddec7ca55ec7510b22e4c51f14098443b8/chardet-3.0.4-py2.py3-none-any.whl (133kB)
+Collecting Click==7.0 (from -r requirements-dev.txt (line 20))
+  Downloading https://files.pythonhosted.org/packages/fa/37/45185cb5abbc30d7257104c434fe0b07e5a195a6847506c074527aa599ec/Click-7.0-py2.py3-none-any.whl (81kB)
+Collecting clickclick==1.2.2 (from -r requirements-dev.txt (line 21))
+  Downloading https://files.pythonhosted.org/packages/b6/51/2b04f7a56dcbacc0e3a7cf726e1d88d28866bf488a7a0668582306e1e643/clickclick-1.2.2-py2.py3-none-any.whl
+Collecting cloud-blobstore==3.1.0 (from -r requirements-dev.txt (line 22))
+  Downloading https://files.pythonhosted.org/packages/bb/97/3cc1e2547a03ce06cfb33605910f2245bca64b81093c5df81be0c521a378/cloud_blobstore-3.1.0-py2.py3-none-any.whl
+Collecting colorama==0.3.9 (from -r requirements-dev.txt (line 23))
+  Downloading https://files.pythonhosted.org/packages/db/c8/7dcf9dbcb22429512708fe3a547f8b6101c0d02137acbd892505aee57adf/colorama-0.3.9-py2.py3-none-any.whl
+Collecting connexion==1.5.3 (from -r requirements-dev.txt (line 24))
+  Downloading https://files.pythonhosted.org/packages/97/30/34978641d519195a13dc60ab360fc103c723d7c13aa2f60ad65d367e826f/connexion-1.5.3-py2.py3-none-any.whl (1.0MB)
+Collecting coverage==4.5.2 (from -r requirements-dev.txt (line 25))
+  Downloading https://files.pythonhosted.org/packages/a4/5c/b3eac6aa7eb4af83c8580d9c1578343910bdcc59e64e3565402f9a527f9c/coverage-4.5.2-cp36-cp36m-manylinux1_x86_64.whl (205kB)
+Collecting crcmod==1.7 (from -r requirements-dev.txt (line 26))
+  Downloading https://files.pythonhosted.org/packages/6b/b0/e595ce2a2527e169c3bcd6c33d2473c1918e0b7f6826a043ca1245dd4e5b/crcmod-1.7.tar.gz (89kB)
+Collecting cryptography==2.4.2 (from -r requirements-dev.txt (line 27))
+  Downloading https://files.pythonhosted.org/packages/60/c7/99b33c53cf3f20a97a4c4bfd3ab66dcc93d99da0a97cc9597aa36ae6bb62/cryptography-2.4.2-cp34-abi3-manylinux1_x86_64.whl (2.1MB)
+Collecting dcplib==1.4.0 (from -r requirements-dev.txt (line 28))
+  Downloading https://files.pythonhosted.org/packages/89/5e/528f58e3065841452fdfae07b80d7ed369f846b62fb71c1537df9756cbfd/dcplib-1.4.0-py3-none-any.whl
+Collecting dnspython==1.16.0 (from -r requirements-dev.txt (line 29))
+  Downloading https://files.pythonhosted.org/packages/ec/d3/3aa0e7213ef72b8585747aa0e271a9523e713813b9a20177ebe1e939deb0/dnspython-1.16.0-py2.py3-none-any.whl (188kB)
+Collecting docutils==0.14 (from -r requirements-dev.txt (line 30))
+  Downloading https://files.pythonhosted.org/packages/36/fa/08e9e6e0e3cbd1d362c3bbee8d01d0aedb2155c4ac112b19ef3cae8eed8d/docutils-0.14-py3-none-any.whl (543kB)
+Collecting domovoi==1.9.0 (from -r requirements-dev.txt (line 31))
+  Downloading https://files.pythonhosted.org/packages/35/b3/c54c081feb3707179752127942d4a173fa5f8b5f9e1561e72ac7c67302c9/domovoi-1.9.0-py2.py3-none-any.whl
+Collecting elasticsearch==5.5.3 (from -r requirements-dev.txt (line 32))
+  Downloading https://files.pythonhosted.org/packages/ba/9a/518b2638dcc762dcb627384701395e24caabd8bef4d9f76574b6707bbbe6/elasticsearch-5.5.3-py2.py3-none-any.whl (119kB)
+Collecting elasticsearch-dsl==5.4.0 (from -r requirements-dev.txt (line 33))
+  Downloading https://files.pythonhosted.org/packages/6f/e0/51bd2b3310499bbc06ee7f43cb0e8ea1c91f8f595912bcb08bb3208c0aa0/elasticsearch_dsl-5.4.0-py2.py3-none-any.whl (46kB)
+Collecting enum-compat==0.0.2 (from -r requirements-dev.txt (line 34))
+  Downloading https://files.pythonhosted.org/packages/95/6e/26bdcba28b66126f66cf3e4cd03bcd63f7ae330d29ee68b1f6b623550bfa/enum-compat-0.0.2.tar.gz
+Collecting Faker==1.0.1 (from -r requirements-dev.txt (line 35))
+  Downloading https://files.pythonhosted.org/packages/13/11/9c30bf6fc50fa1da1d9785268fc580ec04d6bb227ff2c5747359f9a97013/Faker-1.0.1-py2.py3-none-any.whl (845kB)
+Collecting fasteners==0.14.1 (from -r requirements-dev.txt (line 36))
+  Downloading https://files.pythonhosted.org/packages/14/3a/096c7ad18e102d4f219f5dd15951f9728ca5092a3385d2e8f79a7c1e1017/fasteners-0.14.1-py2.py3-none-any.whl
+Collecting flake8==3.6.0 (from -r requirements-dev.txt (line 37))
+  Downloading https://files.pythonhosted.org/packages/34/a6/49e2849a0e5464e1b5d621f63bc8453066f0f367bb3b744a33fca0bc1ddd/flake8-3.6.0-py2.py3-none-any.whl (68kB)
+Collecting Flask==1.0.2 (from -r requirements-dev.txt (line 38))
+  Downloading https://files.pythonhosted.org/packages/7f/e7/08578774ed4536d3242b14dacb4696386634607af824ea997202cd0edb4b/Flask-1.0.2-py2.py3-none-any.whl (91kB)
+Collecting future==0.17.1 (from -r requirements-dev.txt (line 39))
+  Downloading https://files.pythonhosted.org/packages/90/52/e20466b85000a181e1e144fd8305caf2cf475e2f9674e797b222f8105f5f/future-0.17.1.tar.gz (829kB)
+Collecting google-api-core==1.7.0 (from -r requirements-dev.txt (line 40))
+  Downloading https://files.pythonhosted.org/packages/8b/01/13758ff9b970008ccf9e0dcc3b86d0e01937d7485b9a2c6142c9c2bdb4da/google_api_core-1.7.0-py2.py3-none-any.whl (64kB)
+Collecting google-apitools==0.5.25 (from -r requirements-dev.txt (line 41))
+  Downloading https://files.pythonhosted.org/packages/19/f3/b65d18fdbf772b49e4bc5c7098399e15b4c3dcfa12f1a699a35b030ac743/google-apitools-0.5.25.tar.gz (170kB)
+Collecting google-auth==1.6.2 (from -r requirements-dev.txt (line 42))
+  Downloading https://files.pythonhosted.org/packages/4e/85/71b2dfbf5b4241cd031cc333ed71f90a271074a97cb2c517bb65f07a1a90/google_auth-1.6.2-py2.py3-none-any.whl (73kB)
+Collecting google-cloud-core==0.29.1 (from -r requirements-dev.txt (line 43))
+  Downloading https://files.pythonhosted.org/packages/0c/f2/3c225e7a69cb27d283b68bff867722bd066bc1858611180197f711815ea5/google_cloud_core-0.29.1-py2.py3-none-any.whl
+Collecting google-cloud-storage==1.13.2 (from -r requirements-dev.txt (line 44))
+  Downloading https://files.pythonhosted.org/packages/92/da/115f23ba9aa56f4d5de3f02306a36eb6d0884561e0059987865cb0cce42e/google_cloud_storage-1.13.2-py2.py3-none-any.whl (59kB)
+Collecting google-resumable-media==0.3.2 (from -r requirements-dev.txt (line 45))
+  Downloading https://files.pythonhosted.org/packages/e2/5d/4bc5c28c252a62efe69ed1a1561da92bd5af8eca0cdcdf8e60354fae9b29/google_resumable_media-0.3.2-py2.py3-none-any.whl
+Collecting googleapis-common-protos==1.5.5 (from -r requirements-dev.txt (line 46))
+  Downloading https://files.pythonhosted.org/packages/ae/94/a256572abf5d10347301c638d5df552fab1515497270726e6b56698d2e99/googleapis-common-protos-1.5.5.tar.gz
+Collecting google-api-python-client==1.7.8 (from -r requirements-dev.txt (line 47))
+  Downloading https://files.pythonhosted.org/packages/55/e9/e8fb2e3a031cb69b9524b80a92b126665d9a17421700a219555e3233ab6a/google_api_python_client-1.7.8-py3-none-any.whl (56kB)
+Collecting httpie==1.0.2 (from -r requirements-dev.txt (line 48))
+  Downloading https://files.pythonhosted.org/packages/d7/46/cfb014b9de6ac5cdd1fa06d85f411dd9506102c8b094906460b4a1710681/httpie-1.0.2-py2.py3-none-any.whl (59kB)
+Collecting httplib2==0.12.0 (from -r requirements-dev.txt (line 49))
+  Downloading https://files.pythonhosted.org/packages/ce/ed/803905d670b52fa0edfdd135337e545b4496c2ab3a222f1449b7256eb99f/httplib2-0.12.0.tar.gz (218kB)
+Collecting idna==2.8 (from -r requirements-dev.txt (line 50))
+  Downloading https://files.pythonhosted.org/packages/14/2c/cd551d81dbe15200be1cf41cd03869a46fe7226e7450af7a6545bfc474c9/idna-2.8-py2.py3-none-any.whl (58kB)
+Collecting inflection==0.3.1 (from -r requirements-dev.txt (line 51))
+  Downloading https://files.pythonhosted.org/packages/d5/35/a6eb45b4e2356fe688b21570864d4aa0d0a880ce387defe9c589112077f8/inflection-0.3.1.tar.gz
+Collecting ipwhois==1.0.0 (from -r requirements-dev.txt (line 52))
+  Downloading https://files.pythonhosted.org/packages/50/a4/cef165da087eae4d91f11f1f42ca356ce9410fee8145af76484a9589c447/ipwhois-1.0.0-py2.py3-none-any.whl (80kB)
+Collecting iso8601==0.1.12 (from -r requirements-dev.txt (line 53))
+  Downloading https://files.pythonhosted.org/packages/ef/57/7162609dab394d38bbc7077b7ba0a6f10fb09d8b7701ea56fa1edc0c4345/iso8601-0.1.12-py2.py3-none-any.whl
+Collecting itsdangerous==1.1.0 (from -r requirements-dev.txt (line 54))
+  Downloading https://files.pythonhosted.org/packages/76/ae/44b03b253d6fade317f32c24d100b3b35c2239807046a4c953c7b89fa49e/itsdangerous-1.1.0-py2.py3-none-any.whl
+Collecting Jinja2==2.10 (from -r requirements-dev.txt (line 55))
+  Downloading https://files.pythonhosted.org/packages/7f/ff/ae64bacdfc95f27a016a7bed8e8686763ba4d277a78ca76f32659220a731/Jinja2-2.10-py2.py3-none-any.whl (126kB)
+Collecting jmespath==0.9.3 (from -r requirements-dev.txt (line 56))
+  Downloading https://files.pythonhosted.org/packages/b7/31/05c8d001f7f87f0f07289a5fc0fc3832e9a57f2dbd4d3b0fee70e0d51365/jmespath-0.9.3-py2.py3-none-any.whl
+Collecting jsonpickle==1.0 (from -r requirements-dev.txt (line 57))
+  Downloading https://files.pythonhosted.org/packages/ca/ce/97404d5aeb58e6155c216825c81b50f6eca8a5345c582317ae48391878f8/jsonpickle-1.0-py2.py3-none-any.whl
+Collecting jsonpointer==2.0 (from -r requirements-dev.txt (line 58))
+  Downloading https://files.pythonhosted.org/packages/18/b0/a80d29577c08eea401659254dfaed87f1af45272899e1812d7e01b679bc5/jsonpointer-2.0-py2.py3-none-any.whl
+Collecting jsonschema==2.6.0 (from -r requirements-dev.txt (line 59))
+  Downloading https://files.pythonhosted.org/packages/77/de/47e35a97b2b05c2fadbec67d44cfcdcd09b8086951b331d82de90d2912da/jsonschema-2.6.0-py2.py3-none-any.whl
+Collecting keymaker==1.0.7 (from -r requirements-dev.txt (line 60))
+  Downloading https://files.pythonhosted.org/packages/4c/9b/0b01917d1f104da20bd25b473871be2f9eb1080e494527b81b677a99f569/keymaker-1.0.7-py2.py3-none-any.whl
+Collecting MarkupSafe==1.1.0 (from -r requirements-dev.txt (line 61))
+  Downloading https://files.pythonhosted.org/packages/08/04/f2191b50fb7f0712f03f064b71d8b4605190f2178ba02e975a87f7b89a0d/MarkupSafe-1.1.0-cp36-cp36m-manylinux1_x86_64.whl
+Collecting mccabe==0.6.1 (from -r requirements-dev.txt (line 62))
+  Downloading https://files.pythonhosted.org/packages/87/89/479dc97e18549e21354893e4ee4ef36db1d237534982482c3681ee6e7b57/mccabe-0.6.1-py2.py3-none-any.whl
+Collecting monotonic==1.5 (from -r requirements-dev.txt (line 63))
+  Downloading https://files.pythonhosted.org/packages/ac/aa/063eca6a416f397bd99552c534c6d11d57f58f2e94c14780f3bbf818c4cf/monotonic-1.5-py2.py3-none-any.whl
+Collecting mypy==0.650 (from -r requirements-dev.txt (line 64))
+  Downloading https://files.pythonhosted.org/packages/d4/5d/769e126ad436311f83086fb8aa5368fe61655f570b334c33158a34173fea/mypy-0.650-py3-none-any.whl (1.4MB)
+Collecting mypy-extensions==0.4.1 (from -r requirements-dev.txt (line 65))
+  Downloading https://files.pythonhosted.org/packages/4d/72/8d54e2b296631b9b14961d583e56e90d9d7fba8a240d5ce7f1113cc5e887/mypy_extensions-0.4.1-py2.py3-none-any.whl
+Collecting nestedcontext==0.0.4 (from -r requirements-dev.txt (line 66))
+  Downloading https://files.pythonhosted.org/packages/d5/36/3121f722d0c17c3d551506c9ee2096e089121389bc57f0c5309b90d687d4/nestedcontext-0.0.4-py3-none-any.whl
+Collecting oauth2client==4.1.3 (from -r requirements-dev.txt (line 67))
+  Downloading https://files.pythonhosted.org/packages/95/a9/4f25a14d23f0786b64875b91784607c2277eff25d48f915e39ff0cff505a/oauth2client-4.1.3-py2.py3-none-any.whl (98kB)
+Collecting paramiko==2.4.2 (from -r requirements-dev.txt (line 68))
+  Downloading https://files.pythonhosted.org/packages/cf/ae/94e70d49044ccc234bfdba20114fa947d7ba6eb68a2e452d89b920e62227/paramiko-2.4.2-py2.py3-none-any.whl (193kB)
+Collecting protobuf==3.6.1 (from -r requirements-dev.txt (line 69))
+  Downloading https://files.pythonhosted.org/packages/c2/f9/28787754923612ca9bfdffc588daa05580ed70698add063a5629d1a4209d/protobuf-3.6.1-cp36-cp36m-manylinux1_x86_64.whl (1.1MB)
+Collecting puremagic==1.4 (from -r requirements-dev.txt (line 70))
+  Downloading https://files.pythonhosted.org/packages/19/fe/343eabd56fd290f6a8b3e32512f8cd368f49eaf7eae57d70a987bd19ff44/puremagic-1.4-py3-none-any.whl
+Collecting pyasn1==0.4.5 (from -r requirements-dev.txt (line 71))
+  Downloading https://files.pythonhosted.org/packages/7b/7c/c9386b82a25115cccf1903441bba3cbadcfae7b678a20167347fa8ded34c/pyasn1-0.4.5-py2.py3-none-any.whl (73kB)
+Collecting pyasn1-modules==0.2.3 (from -r requirements-dev.txt (line 72))
+  Downloading https://files.pythonhosted.org/packages/59/84/339c2de112d7448d7d4c500b8016783d9eac8981f89ec1d58fdd4685d97f/pyasn1_modules-0.2.3-py2.py3-none-any.whl (65kB)
+Collecting pycodestyle==2.4.0 (from -r requirements-dev.txt (line 73))
+  Downloading https://files.pythonhosted.org/packages/e5/c6/ce130213489969aa58610042dff1d908c25c731c9575af6935c2dfad03aa/pycodestyle-2.4.0-py2.py3-none-any.whl (62kB)
+Collecting pycparser==2.19 (from -r requirements-dev.txt (line 74))
+  Downloading https://files.pythonhosted.org/packages/68/9e/49196946aee219aead1290e00d1e7fdeab8567783e83e1b9ab5585e6206a/pycparser-2.19.tar.gz (158kB)
+Collecting pyflakes==2.0.0 (from -r requirements-dev.txt (line 75))
+  Downloading https://files.pythonhosted.org/packages/44/98/af7a72c9a543b1487d92813c648cb9b9adfbc96faef5455d60f4439aa99b/pyflakes-2.0.0-py2.py3-none-any.whl (53kB)
+Collecting Pygments==2.3.1 (from -r requirements-dev.txt (line 76))
+  Downloading https://files.pythonhosted.org/packages/13/e5/6d710c9cf96c31ac82657bcfb441df328b22df8564d58d0c4cd62612674c/Pygments-2.3.1-py2.py3-none-any.whl (849kB)
+Collecting PyJWT==1.7.1 (from -r requirements-dev.txt (line 77))
+  Downloading https://files.pythonhosted.org/packages/87/8b/6a9f14b5f781697e51259d81657e6048fd31a113229cf346880bb7545565/PyJWT-1.7.1-py2.py3-none-any.whl
+Collecting PyNaCl==1.3.0 (from -r requirements-dev.txt (line 78))
+  Downloading https://files.pythonhosted.org/packages/27/15/2cd0a203f318c2240b42cd9dd13c931ddd61067809fee3479f44f086103e/PyNaCl-1.3.0-cp34-abi3-manylinux1_x86_64.whl (759kB)
+Collecting python-dateutil==2.7.5 (from -r requirements-dev.txt (line 79))
+  Downloading https://files.pythonhosted.org/packages/74/68/d87d9b36af36f44254a8d512cbfc48369103a3b9e474be9bdfe536abfc45/python_dateutil-2.7.5-py2.py3-none-any.whl (225kB)
+Collecting pytz==2018.7 (from -r requirements-dev.txt (line 80))
+  Downloading https://files.pythonhosted.org/packages/f8/0e/2365ddc010afb3d79147f1dd544e5ee24bf4ece58ab99b16fbb465ce6dc0/pytz-2018.7-py2.py3-none-any.whl (506kB)
+Collecting PyYAML==4.2b4 (from -r requirements-dev.txt (line 81))
+  Downloading https://files.pythonhosted.org/packages/a8/c6/a8d1555e795dbd0375c3c93b576ca13bbf139db51ea604afa19a2c35fc03/PyYAML-4.2b4.tar.gz (262kB)
+Collecting requests==2.21.0 (from -r requirements-dev.txt (line 82))
+  Downloading https://files.pythonhosted.org/packages/7d/e3/20f3d364d6c8e5d2353c72a67778eb189176f08e873c9900e10c0287b84b/requests-2.21.0-py2.py3-none-any.whl (57kB)
+Collecting requests-aws4auth==0.9 (from -r requirements-dev.txt (line 83))
+  Downloading https://files.pythonhosted.org/packages/a4/4e/29ac240bff356eb630bcc729da7cdce6f55f21c442af325ca60dd27d4a3f/requests_aws4auth-0.9-py2.py3-none-any.whl (54kB)
+Collecting requests-http-signature==0.1.0 (from -r requirements-dev.txt (line 84))
+  Downloading https://files.pythonhosted.org/packages/45/c2/dd86e89f8f4fb6cc0028793f725bd536757b630c5734621f72b94b55ef53/requests_http_signature-0.1.0-py2.py3-none-any.whl
+Collecting rsa==3.4.2 (from -r requirements-dev.txt (line 85))
+  Downloading https://files.pythonhosted.org/packages/e1/ae/baedc9cb175552e95f3395c43055a6a5e125ae4d48a1d7a924baca83e92e/rsa-3.4.2-py2.py3-none-any.whl (46kB)
+Collecting rstr==2.2.6 (from -r requirements-dev.txt (line 86))
+  Downloading https://files.pythonhosted.org/packages/b9/30/1e10f00ea45c899ab946f9bde77be49e796a28cb96797ab8b249566490ef/rstr-2.2.6-py2.py3-none-any.whl
+Collecting s3transfer==0.1.13 (from -r requirements-dev.txt (line 87))
+  Downloading https://files.pythonhosted.org/packages/d7/14/2a0004d487464d120c9fb85313a75cd3d71a7506955be458eebfe19a6b1d/s3transfer-0.1.13-py2.py3-none-any.whl (59kB)
+Collecting six==1.12.0 (from -r requirements-dev.txt (line 88))
+  Downloading https://files.pythonhosted.org/packages/73/fb/00a976f728d0d1fecfe898238ce23f502a721c0ac0ecfedb80e0d88c64e9/six-1.12.0-py2.py3-none-any.whl
+Collecting swagger-spec-validator==2.4.1 (from -r requirements-dev.txt (line 89))
+  Downloading https://files.pythonhosted.org/packages/e8/3b/351ede61f9b34d46e3d254889b40ecbcc1521bdb87ad17c43a6b8e4b80b2/swagger_spec_validator-2.4.1-py2.py3-none-any.whl
+Collecting text-unidecode==1.2 (from -r requirements-dev.txt (line 90))
+  Downloading https://files.pythonhosted.org/packages/79/42/d717cc2b4520fb09e45b344b1b0b4e81aa672001dd128c180fabc655c341/text_unidecode-1.2-py2.py3-none-any.whl (77kB)
+Collecting tweak==1.0.0 (from -r requirements-dev.txt (line 91))
+  Downloading https://files.pythonhosted.org/packages/7a/f5/a95bcfaff4871b5fba7bd4588da42f3dec682fea40dbb6b06c95184607c3/tweak-1.0.0-py2.py3-none-any.whl
+Collecting typed-ast==1.1.1 (from -r requirements-dev.txt (line 92))
+  Downloading https://files.pythonhosted.org/packages/de/50/7571200eff27c5c30dafa595e355495e1de85aad5fa3fe4c206791d827ff/typed_ast-1.1.1-cp36-cp36m-manylinux1_x86_64.whl (725kB)
+Collecting typing==3.6.4 (from -r requirements-dev.txt (line 93))
+  Downloading https://files.pythonhosted.org/packages/05/2b/2b05bf1d5a9dd450447c9a5df3e118a465e5d3cb12b73b7220a5064a403f/typing-3.6.4-py3-none-any.whl
+Collecting uritemplate==3.0.0 (from -r requirements-dev.txt (line 94))
+  Downloading https://files.pythonhosted.org/packages/e5/7d/9d5a640c4f8bf2c8b1afc015e9a9d8de32e13c9016dcc4b0ec03481fb396/uritemplate-3.0.0-py2.py3-none-any.whl
+Collecting urllib3==1.24.1 (from -r requirements-dev.txt (line 95))
+  Downloading https://files.pythonhosted.org/packages/62/00/ee1d7de624db8ba7090d1226aebefab96a2c71cd5cfa7629d6ad3f61b79e/urllib3-1.24.1-py2.py3-none-any.whl (118kB)
+Collecting Werkzeug==0.14.1 (from -r requirements-dev.txt (line 96))
+  Downloading https://files.pythonhosted.org/packages/20/c4/12e3e56473e52375aa29c4764e70d1b8f3efa6682bef8d0aae04fe335243/Werkzeug-0.14.1-py2.py3-none-any.whl (322kB)
+Collecting wrapt==1.10.11 (from -r requirements-dev.txt (line 97))
+  Downloading https://files.pythonhosted.org/packages/a0/47/66897906448185fcb77fc3c2b1bc20ed0ecca81a0f2f88eda3fc5a34fc3d/wrapt-1.10.11.tar.gz
+Collecting xmltodict==0.11.0 (from -r requirements-dev.txt (line 98))
+  Downloading https://files.pythonhosted.org/packages/42/a9/7e99652c6bc619d19d58cdd8c47560730eb5825d43a7e25db2e1d776ceb7/xmltodict-0.11.0-py2.py3-none-any.whl
+Collecting yq==2.7.1 (from -r requirements-dev.txt (line 99))
+  Downloading https://files.pythonhosted.org/packages/77/b3/fa1248a9311a992087a344c997e3342fb0f61fb9932d2153ae9787369be0/yq-2.7.1-py2.py3-none-any.whl
+Requirement already satisfied: wheel in /home/hca_cicd/venv/lib/python3.6/site-packages (from chalice==1.6.2->-r requirements-dev.txt (line 18)) (0.33.1)
+Collecting pip<=18.1,>=9 (from chalice==1.6.2->-r requirements-dev.txt (line 18))
+  Downloading https://files.pythonhosted.org/packages/c2/d7/90f34cb0d83a6c5631cf71dfe64cc1054598c843a92b400e55675cc2ac37/pip-18.1-py2.py3-none-any.whl (1.3MB)
+Requirement already satisfied: setuptools in /home/hca_cicd/venv/lib/python3.6/site-packages (from chalice==1.6.2->-r requirements-dev.txt (line 18)) (40.8.0)
+Collecting google-auth-httplib2>=0.0.3 (from google-api-python-client==1.7.8->-r requirements-dev.txt (line 47))
+  Downloading https://files.pythonhosted.org/packages/33/49/c814d6d438b823441552198f096fcd0377fd6c88714dbed34f1d3c8c4389/google_auth_httplib2-0.0.3-py2.py3-none-any.whl
+Collecting argparse (from puremagic==1.4->-r requirements-dev.txt (line 70))
+  Downloading https://files.pythonhosted.org/packages/f2/94/3af39d34be01a24a6e65433d19e107099374224905f1e0cc6bbe1fd22a2f/argparse-1.4.0-py2.py3-none-any.whl
+Building wheels for collected packages: crcmod, enum-compat, future, google-apitools, googleapis-common-protos, httplib2, inflection, pycparser, PyYAML, wrapt
+  Building wheel for crcmod (setup.py): started
+  Building wheel for crcmod (setup.py): finished with status 'done'
+  Stored in directory: /home/hca_cicd/.cache/pip/wheels/50/24/4d/4580ca4a299f1ad6fd63443e6e584cb21e9a07988e4aa8daac
+  Building wheel for enum-compat (setup.py): started
+  Building wheel for enum-compat (setup.py): finished with status 'done'
+  Stored in directory: /home/hca_cicd/.cache/pip/wheels/b1/69/f4/229af6a49beece0f688c9c73d9188769b89e698361d21ce96a
+  Building wheel for future (setup.py): started
+  Building wheel for future (setup.py): finished with status 'done'
+  Stored in directory: /home/hca_cicd/.cache/pip/wheels/0c/61/d2/d6b7317325828fbb39ee6ad559dbe4664d0896da4721bf379e
+  Building wheel for google-apitools (setup.py): started
+  Building wheel for google-apitools (setup.py): finished with status 'done'
+  Stored in directory: /home/hca_cicd/.cache/pip/wheels/ea/c9/a2/ffa35ee36507b203dfdbf15020bcf49215b7ad9f214498bf25
+  Building wheel for googleapis-common-protos (setup.py): started
+  Building wheel for googleapis-common-protos (setup.py): finished with status 'done'
+  Stored in directory: /home/hca_cicd/.cache/pip/wheels/22/57/2c/fdf1a5d9f14360bd1123c6dbac26eb784eba25223800239a69
+  Building wheel for httplib2 (setup.py): started
+  Building wheel for httplib2 (setup.py): finished with status 'done'
+  Stored in directory: /home/hca_cicd/.cache/pip/wheels/6d/41/4b/2b369d6e2b7eaebcdd423516d3fb659c7658c16a2be8fd04ec
+  Building wheel for inflection (setup.py): started
+  Building wheel for inflection (setup.py): finished with status 'done'
+  Stored in directory: /home/hca_cicd/.cache/pip/wheels/9f/5a/d3/6fc3bf6516d2a3eb7e18f9f28b472110b59325f3f258fe9211
+  Building wheel for pycparser (setup.py): started
+  Building wheel for pycparser (setup.py): finished with status 'done'
+  Stored in directory: /home/hca_cicd/.cache/pip/wheels/f2/9a/90/de94f8556265ddc9d9c8b271b0f63e57b26fb1d67a45564511
+  Building wheel for PyYAML (setup.py): started
+  Building wheel for PyYAML (setup.py): finished with status 'done'
+  Stored in directory: /home/hca_cicd/.cache/pip/wheels/d2/ab/e6/df7b6c9e3b43272fe0164d6a012e4e02e63baaddae4ca6a0d0
+  Building wheel for wrapt (setup.py): started
+  Building wheel for wrapt (setup.py): finished with status 'done'
+  Stored in directory: /home/hca_cicd/.cache/pip/wheels/48/5d/04/22361a593e70d23b1f7746d932802efe1f0e523376a74f321e
+Successfully built crcmod enum-compat future google-apitools googleapis-common-protos httplib2 inflection pycparser PyYAML wrapt
+awscli 1.16.83 has requirement PyYAML<=3.13,>=3.10, but you'll have pyyaml 4.2b4 which is incompatible.
+aegea 2.2.6 has requirement pyyaml<4,>=3.12, but you'll have pyyaml 4.2b4 which is incompatible.
+chalice 1.6.2 has requirement click<7.0,>=6.6, but you'll have click 7.0 which is incompatible.
+Installing collected packages: pyasn1, rsa, docutils, jmespath, six, python-dateutil, urllib3, botocore, s3transfer, PyYAML, colorama, awscli, pytz, Babel, argcomplete, idna, chardet, certifi, requests, boto3, keymaker, uritemplate, tweak, pycparser, cffi, bcrypt, asn1crypto, cryptography, PyNaCl, paramiko, dnspython, ipwhois, aegea, attrs, jsonpickle, wrapt, future, aws-xray-sdk, azure-common, azure-nspkg, azure-storage, cachetools, typing, Click, enum-compat, pip, chalice, clickclick, protobuf, pyasn1-modules, google-auth, googleapis-common-protos, google-api-core, google-cloud-core, google-resumable-media, google-cloud-storage, cloud-blobstore, jsonschema, itsdangerous, Werkzeug, MarkupSafe, Jinja2, Flask, inflection, swagger-spec-validator, connexion, coverage, crcmod, argparse, puremagic, dcplib, domovoi, elasticsearch, elasticsearch-dsl, text-unidecode, Faker, monotonic, fasteners, pycodestyle, pyflakes, mccabe, flake8, httplib2, oauth2client, google-apitools, google-auth-httplib2, google-api-python-client, Pygments, httpie, iso8601, jsonpointer, typed-ast, mypy-extensions, mypy, nestedcontext, PyJWT, requests-aws4auth, requests-http-signature, rstr, xmltodict, yq
+  Found existing installation: pip 19.0.3
+    Uninstalling pip-19.0.3:
+      Successfully uninstalled pip-19.0.3
+Successfully installed Babel-2.6.0 Click-7.0 Faker-1.0.1 Flask-1.0.2 Jinja2-2.10 MarkupSafe-1.1.0 PyJWT-1.7.1 PyNaCl-1.3.0 PyYAML-4.2b4 Pygments-2.3.1 Werkzeug-0.14.1 aegea-2.2.6 argcomplete-1.9.4 argparse-1.4.0 asn1crypto-0.24.0 attrs-17.4.0 aws-xray-sdk-2.2.0 awscli-1.16.83 azure-common-1.1.16 azure-nspkg-3.0.2 azure-storage-0.36.0 bcrypt-3.1.5 boto3-1.9.73 botocore-1.12.73 cachetools-3.0.0 certifi-2018.11.29 cffi-1.11.5 chalice-1.6.2 chardet-3.0.4 clickclick-1.2.2 cloud-blobstore-3.1.0 colorama-0.3.9 connexion-1.5.3 coverage-4.5.2 crcmod-1.7 cryptography-2.4.2 dcplib-1.4.0 dnspython-1.16.0 docutils-0.14 domovoi-1.9.0 elasticsearch-5.5.3 elasticsearch-dsl-5.4.0 enum-compat-0.0.2 fasteners-0.14.1 flake8-3.6.0 future-0.17.1 google-api-core-1.7.0 google-api-python-client-1.7.8 google-apitools-0.5.25 google-auth-1.6.2 google-auth-httplib2-0.0.3 google-cloud-core-0.29.1 google-cloud-storage-1.13.2 google-resumable-media-0.3.2 googleapis-common-protos-1.5.5 httpie-1.0.2 httplib2-0.12.0 idna-2.8 inflection-0.3.1 ipwhois-1.0.0 iso8601-0.1.12 itsdangerous-1.1.0 jmespath-0.9.3 jsonpickle-1.0 jsonpointer-2.0 jsonschema-2.6.0 keymaker-1.0.7 mccabe-0.6.1 monotonic-1.5 mypy-0.650 mypy-extensions-0.4.1 nestedcontext-0.0.4 oauth2client-4.1.3 paramiko-2.4.2 pip-18.1 protobuf-3.6.1 puremagic-1.4 pyasn1-0.4.5 pyasn1-modules-0.2.3 pycodestyle-2.4.0 pycparser-2.19 pyflakes-2.0.0 python-dateutil-2.7.5 pytz-2018.7 requests-2.21.0 requests-aws4auth-0.9 requests-http-signature-0.1.0 rsa-3.4.2 rstr-2.2.6 s3transfer-0.1.13 six-1.12.0 swagger-spec-validator-2.4.1 text-unidecode-1.2 tweak-1.0.0 typed-ast-1.1.1 typing-3.6.4 uritemplate-3.0.0 urllib3-1.24.1 wrapt-1.10.11 xmltodict-0.11.0 yq-2.7.1
+$ source environment
+$ if [[ -f "environment.$CI_COMMIT_REF_NAME" ]]; then
+$ scripts/fetch_secret.sh application_secrets.json > application_secrets.json
+$ scripts/fetch_secret.sh gcp-credentials.json > gcp-credentials.json
+$ export GOOGLE_APPLICATION_CREDENTIALS=$(pwd -P)/gcp-credentials.json
+$ make plan-infra
+make -C infra plan-all
+make[1]: Entering directory '/home/hca_cicd/data-store/infra'
+make[2]: Entering directory '/home/hca_cicd/data-store/infra'
+rm -rf async_state_db/.terraform/*.tfstate
+./build_deploy_config.py async_state_db
+cd async_state_db; terraform init;
+
+Initializing the backend...
+
+Successfully configured the backend "s3"! Terraform will automatically
+use this backend unless the backend configuration changes.
+
+Initializing provider plugins...
+- Checking for available provider plugins on https://releases.hashicorp.com...
+- Downloading plugin for provider "google" (2.1.0)...
+- Downloading plugin for provider "aws" (2.0.0)...
+
+The following providers do not have any version constraints in configuration,
+so the latest version was installed.
+
+To prevent automatic upgrades to new major versions that may contain breaking
+changes, it is recommended to add version = "..." constraints to the
+corresponding provider blocks in configuration, with the constraint strings
+suggested below.
+
+* provider.aws: version = "~> 2.0"
+* provider.google: version = "~> 2.1"
+
+Terraform has been successfully initialized!
+
+You may now begin working with Terraform. Try running "terraform plan" to see
+any changes that are required for your infrastructure. All Terraform commands
+should now work.
+
+If you ever set or change modules or backend configuration for Terraform,
+rerun this command to reinitialize your working directory. If you forget, other
+commands will detect it and remind you to do so if necessary.
+async_state_db buckets domain elasticsearch gcp_service_account subscription_v2_db
+cd async_state_db; terraform plan -detailed-exitcode
+Refreshing Terraform state in-memory prior to plan...
+The refreshed state will be used to calculate this plan, but will not be
+persisted to local or remote state storage.
+
+aws_dynamodb_table.sfn_state: Refreshing state... (ID: dss-async-state-dev)
+
+------------------------------------------------------------------------
+
+No changes. Infrastructure is up-to-date.
+
+This means that Terraform did not detect any differences between your
+configuration and real physical resources that exist. As a result, no
+actions need to be performed.
+make[2]: Leaving directory '/home/hca_cicd/data-store/infra'
+make[2]: Entering directory '/home/hca_cicd/data-store/infra'
+rm -rf buckets/.terraform/*.tfstate
+./build_deploy_config.py buckets
+cd buckets; terraform init;
+
+Initializing the backend...
+
+Successfully configured the backend "s3"! Terraform will automatically
+use this backend unless the backend configuration changes.
+
+Initializing provider plugins...
+- Checking for available provider plugins on https://releases.hashicorp.com...
+- Downloading plugin for provider "aws" (2.0.0)...
+- Downloading plugin for provider "google" (2.1.0)...
+
+The following providers do not have any version constraints in configuration,
+so the latest version was installed.
+
+To prevent automatic upgrades to new major versions that may contain breaking
+changes, it is recommended to add version = "..." constraints to the
+corresponding provider blocks in configuration, with the constraint strings
+suggested below.
+
+* provider.aws: version = "~> 2.0"
+* provider.google: version = "~> 2.1"
+
+Terraform has been successfully initialized!
+
+You may now begin working with Terraform. Try running "terraform plan" to see
+any changes that are required for your infrastructure. All Terraform commands
+should now work.
+
+If you ever set or change modules or backend configuration for Terraform,
+rerun this command to reinitialize your working directory. If you forget, other
+commands will detect it and remind you to do so if necessary.
+async_state_db buckets domain elasticsearch gcp_service_account subscription_v2_db
+cd buckets; terraform plan -detailed-exitcode
+Refreshing Terraform state in-memory prior to plan...
+The refreshed state will be used to calculate this plan, but will not be
+persisted to local or remote state storage.
+
+google_storage_bucket.dss_gs_bucket_test_fixtures: Refreshing state... (ID: org-hca-dss-test-fixtures)
+google_storage_bucket.dss_gs_checkout_bucket_test: Refreshing state... (ID: org-hca-dss-checkout-test)
+google_storage_bucket.dss_gs_bucket_test: Refreshing state... (ID: org-hca-dss-test)
+google_storage_bucket.dss_gs_checkout_bucket: Refreshing state... (ID: org-humancellatlas-dss-checkout-dev)
+google_storage_bucket.dss_gs_checkout_bucket_test_user: Refreshing state... (ID: org-hca-dss-checkout-test-user)
+google_storage_bucket.dss_gs_bucket: Refreshing state... (ID: org-humancellatlas-dss-dev)
+google_storage_bucket_iam_member.checkout_viewer[0]: Refreshing state... (ID: org-humancellatlas-dss-checkout-dev/rol...-compute@developer.gserviceaccount.com)
+google_storage_bucket_iam_member.checkout_viewer[1]: Refreshing state... (ID: org-humancellatlas-dss-checkout-dev/rol...-dsde-mint-dev.iam.gserviceaccount.com)
+google_storage_bucket_iam_member.checkout_viewer[2]: Refreshing state... (ID: org-humancellatlas-dss-checkout-dev/rol...-dsde-mint-dev.iam.gserviceaccount.com)
+aws_s3_bucket.dss_s3_bucket_test: Refreshing state... (ID: org-hca-dss-test)
+aws_s3_bucket.dss_s3_bucket: Refreshing state... (ID: org-humancellatlas-dss-dev)
+aws_s3_bucket.dss_s3_checkout_bucket_unwritable: Refreshing state... (ID: org-hca-dss-checkout-unwritable)
+aws_s3_bucket.dss_s3_bucket_test_fixtures: Refreshing state... (ID: org-hca-dss-test-fixtures)
+aws_s3_bucket.dss_s3_checkout_bucket_test: Refreshing state... (ID: org-hca-dss-checkout-test)
+aws_s3_bucket.dss_s3_checkout_bucket_test_user: Refreshing state... (ID: org-hca-dss-checkout-test-user)
+aws_s3_bucket.dss_s3_checkout_bucket: Refreshing state... (ID: org-humancellatlas-dss-checkout-dev)
+
+------------------------------------------------------------------------
+
+No changes. Infrastructure is up-to-date.
+
+This means that Terraform did not detect any differences between your
+configuration and real physical resources that exist. As a result, no
+actions need to be performed.
+make[2]: Leaving directory '/home/hca_cicd/data-store/infra'
+make[2]: Entering directory '/home/hca_cicd/data-store/infra'
+rm -rf domain/.terraform/*.tfstate
+./build_deploy_config.py domain
+cd domain; terraform init;
+
+Initializing the backend...
+
+Successfully configured the backend "s3"! Terraform will automatically
+use this backend unless the backend configuration changes.
+
+Initializing provider plugins...
+- Checking for available provider plugins on https://releases.hashicorp.com...
+- Downloading plugin for provider "google" (2.1.0)...
+- Downloading plugin for provider "aws" (2.0.0)...
+
+The following providers do not have any version constraints in configuration,
+so the latest version was installed.
+
+To prevent automatic upgrades to new major versions that may contain breaking
+changes, it is recommended to add version = "..." constraints to the
+corresponding provider blocks in configuration, with the constraint strings
+suggested below.
+
+* provider.aws: version = "~> 2.0"
+* provider.google: version = "~> 2.1"
+
+Terraform has been successfully initialized!
+
+You may now begin working with Terraform. Try running "terraform plan" to see
+any changes that are required for your infrastructure. All Terraform commands
+should now work.
+
+If you ever set or change modules or backend configuration for Terraform,
+rerun this command to reinitialize your working directory. If you forget, other
+commands will detect it and remind you to do so if necessary.
+async_state_db buckets domain elasticsearch gcp_service_account subscription_v2_db
+cd domain; terraform plan -detailed-exitcode
+Refreshing Terraform state in-memory prior to plan...
+The refreshed state will be used to calculate this plan, but will not be
+persisted to local or remote state storage.
+
+data.aws_caller_identity.current: Refreshing state...
+data.aws_route53_zone.selected: Refreshing state...
+aws_api_gateway_domain_name.dss: Refreshing state... (ID: dss.dev.data.humancellatlas.org)
+aws_route53_record.dss: Refreshing state... (ID: Z3JENSORIY6JOR_dss.dev.data.humancellatlas.org_CNAME)
+
+------------------------------------------------------------------------
+
+No changes. Infrastructure is up-to-date.
+
+This means that Terraform did not detect any differences between your
+configuration and real physical resources that exist. As a result, no
+actions need to be performed.
+make[2]: Leaving directory '/home/hca_cicd/data-store/infra'
+make[2]: Entering directory '/home/hca_cicd/data-store/infra'
+rm -rf elasticsearch/.terraform/*.tfstate
+./build_deploy_config.py elasticsearch
+cd elasticsearch; terraform init;
+
+Initializing the backend...
+
+Successfully configured the backend "s3"! Terraform will automatically
+use this backend unless the backend configuration changes.
+
+Initializing provider plugins...
+- Checking for available provider plugins on https://releases.hashicorp.com...
+- Downloading plugin for provider "google" (2.1.0)...
+- Downloading plugin for provider "aws" (2.0.0)...
+
+The following providers do not have any version constraints in configuration,
+so the latest version was installed.
+
+To prevent automatic upgrades to new major versions that may contain breaking
+changes, it is recommended to add version = "..." constraints to the
+corresponding provider blocks in configuration, with the constraint strings
+suggested below.
+
+* provider.aws: version = "~> 2.0"
+* provider.google: version = "~> 2.1"
+
+Terraform has been successfully initialized!
+
+You may now begin working with Terraform. Try running "terraform plan" to see
+any changes that are required for your infrastructure. All Terraform commands
+should now work.
+
+If you ever set or change modules or backend configuration for Terraform,
+rerun this command to reinitialize your working directory. If you forget, other
+commands will detect it and remind you to do so if necessary.
+async_state_db buckets domain elasticsearch gcp_service_account subscription_v2_db
+cd elasticsearch; terraform plan -detailed-exitcode
+Refreshing Terraform state in-memory prior to plan...
+The refreshed state will be used to calculate this plan, but will not be
+persisted to local or remote state storage.
+
+aws_cloudwatch_log_group.es_application_log: Refreshing state... (ID: /aws/aes/domains/dss-index-dev/es-application-dev-logs)
+aws_cloudwatch_log_group.es_search_log: Refreshing state... (ID: /aws/aes/domains/dss-index-dev/es-search-dev-logs)
+data.aws_region.current: Refreshing state...
+aws_cloudwatch_log_group.es_index_log: Refreshing state... (ID: /aws/aes/domains/dss-index-dev/es-index-dev-logs)
+data.aws_secretsmanager_secret_version.source_ips: Refreshing state...
+data.aws_caller_identity.current: Refreshing state...
+data.aws_iam_policy_document.dss_es_access_policy_documennt: Refreshing state...
+aws_elasticsearch_domain.elasticsearch: Refreshing state... (ID: arn:aws:es:us-east-1:861229788715:domain/dss-index-dev)
+data.aws_iam_policy_document.dss_es_cloudwatch_policy_document: Refreshing state...
+aws_cloudwatch_log_resource_policy.dss_es_cloudwatch_policy: Refreshing state... (ID: dss-index-dev)
+
+------------------------------------------------------------------------
+
+No changes. Infrastructure is up-to-date.
+
+This means that Terraform did not detect any differences between your
+configuration and real physical resources that exist. As a result, no
+actions need to be performed.
+make[2]: Leaving directory '/home/hca_cicd/data-store/infra'
+make[2]: Entering directory '/home/hca_cicd/data-store/infra'
+rm -rf gcp_service_account/.terraform/*.tfstate
+./build_deploy_config.py gcp_service_account
+cd gcp_service_account; terraform init;
+
+Initializing the backend...
+
+Successfully configured the backend "s3"! Terraform will automatically
+use this backend unless the backend configuration changes.
+
+Initializing provider plugins...
+- Checking for available provider plugins on https://releases.hashicorp.com...
+- Downloading plugin for provider "aws" (2.0.0)...
+- Downloading plugin for provider "google" (2.1.0)...
+
+The following providers do not have any version constraints in configuration,
+so the latest version was installed.
+
+To prevent automatic upgrades to new major versions that may contain breaking
+changes, it is recommended to add version = "..." constraints to the
+corresponding provider blocks in configuration, with the constraint strings
+suggested below.
+
+* provider.aws: version = "~> 2.0"
+* provider.google: version = "~> 2.1"
+
+Terraform has been successfully initialized!
+
+You may now begin working with Terraform. Try running "terraform plan" to see
+any changes that are required for your infrastructure. All Terraform commands
+should now work.
+
+If you ever set or change modules or backend configuration for Terraform,
+rerun this command to reinitialize your working directory. If you forget, other
+commands will detect it and remind you to do so if necessary.
+async_state_db buckets domain elasticsearch gcp_service_account subscription_v2_db
+cd gcp_service_account; terraform plan -detailed-exitcode
+Refreshing Terraform state in-memory prior to plan...
+The refreshed state will be used to calculate this plan, but will not be
+persisted to local or remote state storage.
+
+google_service_account.dss: Refreshing state... (ID: projects/human-cell-atlas-travis-test/s...as-travis-test.iam.gserviceaccount.com)
+data.google_project.project: Refreshing state...
+google_project_iam_member.storageobjectcreator: Refreshing state... (ID: human-cell-atlas-travis-test/roles/stor...as-travis-test.iam.gserviceaccount.com)
+google_project_iam_member.viewer: Refreshing state... (ID: human-cell-atlas-travis-test/roles/view...as-travis-test.iam.gserviceaccount.com)
+google_project_iam_member.storageadmin: Refreshing state... (ID: human-cell-atlas-travis-test/roles/stor...as-travis-test.iam.gserviceaccount.com)
+google_project_iam_member.cloudfunctionsdeveloper: Refreshing state... (ID: human-cell-atlas-travis-test/roles/clou...as-travis-test.iam.gserviceaccount.com)
+google_project_iam_member.cloudruntimeconfiguratoradmin: Refreshing state... (ID: human-cell-atlas-travis-test/roles/runt...as-travis-test.iam.gserviceaccount.com)
+google_project_iam_member.serviceaccountactor: Refreshing state... (ID: human-cell-atlas-travis-test/roles/iam....as-travis-test.iam.gserviceaccount.com)
+
+------------------------------------------------------------------------
+
+No changes. Infrastructure is up-to-date.
+
+This means that Terraform did not detect any differences between your
+configuration and real physical resources that exist. As a result, no
+actions need to be performed.
+make[2]: Leaving directory '/home/hca_cicd/data-store/infra'
+make[2]: Entering directory '/home/hca_cicd/data-store/infra'
+rm -rf subscription_v2_db/.terraform/*.tfstate
+./build_deploy_config.py subscription_v2_db
+cd subscription_v2_db; terraform init;
+
+Initializing the backend...
+
+Successfully configured the backend "s3"! Terraform will automatically
+use this backend unless the backend configuration changes.
+
+Initializing provider plugins...
+- Checking for available provider plugins on https://releases.hashicorp.com...
+- Downloading plugin for provider "aws" (2.0.0)...
+- Downloading plugin for provider "google" (2.1.0)...
+
+The following providers do not have any version constraints in configuration,
+so the latest version was installed.
+
+To prevent automatic upgrades to new major versions that may contain breaking
+changes, it is recommended to add version = "..." constraints to the
+corresponding provider blocks in configuration, with the constraint strings
+suggested below.
+
+* provider.aws: version = "~> 2.0"
+* provider.google: version = "~> 2.1"
+
+Terraform has been successfully initialized!
+
+You may now begin working with Terraform. Try running "terraform plan" to see
+any changes that are required for your infrastructure. All Terraform commands
+should now work.
+
+If you ever set or change modules or backend configuration for Terraform,
+rerun this command to reinitialize your working directory. If you forget, other
+commands will detect it and remind you to do so if necessary.
+async_state_db buckets domain elasticsearch gcp_service_account subscription_v2_db
+cd subscription_v2_db; terraform plan -detailed-exitcode
+Refreshing Terraform state in-memory prior to plan...
+The refreshed state will be used to calculate this plan, but will not be
+persisted to local or remote state storage.
+
+aws_dynamodb_table.subscriptions-aws[1]: Refreshing state... (ID: dss-subscriptions-v2-gcp-dev)
+aws_dynamodb_table.subscriptions-aws[0]: Refreshing state... (ID: dss-subscriptions-v2-aws-dev)
+
+------------------------------------------------------------------------
+
+No changes. Infrastructure is up-to-date.
+
+This means that Terraform did not detect any differences between your
+configuration and real physical resources that exist. As a result, no
+actions need to be performed.
+make[2]: Leaving directory '/home/hca_cicd/data-store/infra'
+make[1]: Leaving directory '/home/hca_cicd/data-store/infra'
+$ make deploy
+make -C chalice deploy
+make[1]: Entering directory '/home/hca_cicd/data-store/chalice'
+git clean -df chalicelib vendor
+shopt -s nullglob; for wheel in vendor.in/*/*.whl; do unzip -q -o -d vendor $wheel; done
+cp -R ../dss ../dss-api.yml chalicelib
+aws secretsmanager get-secret-value --secret-id dcp/dss/dev/gcp-credentials.json | jq -r .SecretString > chalicelib/gcp-credentials.json
+aws secretsmanager get-secret-value --secret-id dcp/dss/dev/application_secrets.json | jq -r .SecretString > chalicelib/application_secrets.json
+./build_deploy_config.sh
+{
+    "DomainStatus": {
+        "DomainId": "861229788715/dss-index-dev",
+        "DomainName": "dss-index-dev",
+        "ARN": "arn:aws:es:us-east-1:861229788715:domain/dss-index-dev",
+        "Created": true,
+        "Deleted": false,
+        "Endpoint": "search-dss-index-dev-wc7kz2vuj7mpfjbxnp4ftplpuu.us-east-1.es.amazonaws.com",
+        "Processing": false,
+        "UpgradeProcessing": false,
+        "ElasticsearchVersion": "5.5",
+        "ElasticsearchClusterConfig": {
+            "InstanceType": "m4.large.elasticsearch",
+            "InstanceCount": 2,
+            "DedicatedMasterEnabled": false,
+            "ZoneAwarenessEnabled": false
+        },
+        "EBSOptions": {
+            "EBSEnabled": true,
+            "VolumeType": "gp2",
+            "VolumeSize": 35
+        },
+        "AccessPolicies": "{\"Version\":\"2012-10-17\",\"Statement\":[{\"Sid\":\"\",\"Effect\":\"Allow\",\"Principal\":{\"AWS\":\"arn:aws:iam::861229788715:root\"},\"Action\":\"es:*\",\"Resource\":\"arn:aws:es:us-east-1:861229788715:domain/dss-index-dev/*\"},{\"Sid\":\"\",\"Effect\":\"Allow\",\"Principal\":{\"AWS\":\"*\"},\"Action\":\"es:*\",\"Resource\":\"arn:aws:es:us-east-1:861229788715:domain/dss-index-dev/*\",\"Condition\":{\"IpAddress\":{\"aws:SourceIp\":[\"98.210.239.128\",\"73.92.146.41\",\"73.70.203.63\",\"73.189.30.198\",\"73.170.144.7\",\"69.173.127.229\",\"67.169.145.190\",\"64.71.0.146\",\"193.63.223.21\",\"189.243.139.25\",\"169.233.212.39\",\"169.233.211.173\",\"128.114.59.206\",\"128.114.59.236\",\"128.114.59.229\",\"128.114.59.219\",\"128.114.59.214\",\"128.114.59.210\",\"128.114.59.208\",\"128.114.59.195\",\"128.114.59.189\",\"128.114.59.183\",\"128.114.59.161\",\"128.114.59.155\",\"128.114.59.150\",\"128.114.59.149\",\"12.31.108.106\"]}}}]}",
+        "SnapshotOptions": {
+            "AutomatedSnapshotStartHour": 23
+        },
+        "CognitoOptions": {
+            "Enabled": false
+        },
+        "EncryptionAtRestOptions": {
+            "Enabled": false
+        },
+        "NodeToNodeEncryptionOptions": {
+            "Enabled": false
+        },
+        "AdvancedOptions": {
+            "rest.action.multi.allow_explicit_index": "true"
+        },
+        "LogPublishingOptions": {
+            "ES_APPLICATION_LOGS": {
+                "CloudWatchLogsLogGroupArn": "arn:aws:logs:us-east-1:861229788715:log-group:/aws/aes/domains/dss-index-dev/es-application-dev-logs:*",
+                "Enabled": true
+            },
+            "INDEX_SLOW_LOGS": {
+                "CloudWatchLogsLogGroupArn": "arn:aws:logs:us-east-1:861229788715:log-group:/aws/aes/domains/dss-index-dev/es-index-dev-logs:*",
+                "Enabled": true
+            },
+            "SEARCH_SLOW_LOGS": {
+                "CloudWatchLogsLogGroupArn": "arn:aws:logs:us-east-1:861229788715:log-group:/aws/aes/domains/dss-index-dev/es-search-dev-logs:*",
+                "Enabled": true
+            }
+        },
+        "ServiceSoftwareOptions": {
+            "CurrentVersion": "R20180817-P1",
+            "NewVersion": "R20181023",
+            "UpdateAvailable": true,
+            "Cancellable": false,
+            "UpdateStatus": "ELIGIBLE",
+            "Description": "A newer release R20181023 is available. This release will be automatically deployed after Fri Mar 01 12:04:26 PST 2019",
+            "AutomatedUpdateDate": 1551470666.0
+        }
+    }
+}
+chalice deploy --no-autogen-policy --stage dev --api-gateway-stage dev
+Creating deployment package.
+Updating lambda function: dss-dev
+Updating rest API
+Resources deployed:
+  - Lambda ARN: arn:aws:lambda:us-east-1:861229788715:function:dss-dev
+  - Rest API URL: https://w31r4zbgf1.execute-api.us-east-1.amazonaws.com/dev/
+make[1]: Leaving directory '/home/hca_cicd/data-store/chalice'
+make -j1 -C daemons deploy-serial
+make[1]: Entering directory '/home/hca_cicd/data-store/daemons'
+Terraforming dss-sync-sfn
+./package_daemon.sh dss-sync-sfn
+Running pre-packaging steps for dss-sync-sfn
+./build_deploy_config.sh dss-sync-sfn
+{
+    "DomainStatus": {
+        "DomainId": "861229788715/dss-index-dev",
+        "DomainName": "dss-index-dev",
+        "ARN": "arn:aws:es:us-east-1:861229788715:domain/dss-index-dev",
+        "Created": true,
+        "Deleted": false,
+        "Endpoint": "search-dss-index-dev-wc7kz2vuj7mpfjbxnp4ftplpuu.us-east-1.es.amazonaws.com",
+        "Processing": false,
+        "UpgradeProcessing": false,
+        "ElasticsearchVersion": "5.5",
+        "ElasticsearchClusterConfig": {
+            "InstanceType": "m4.large.elasticsearch",
+            "InstanceCount": 2,
+            "DedicatedMasterEnabled": false,
+            "ZoneAwarenessEnabled": false
+        },
+        "EBSOptions": {
+            "EBSEnabled": true,
+            "VolumeType": "gp2",
+            "VolumeSize": 35
+        },
+        "AccessPolicies": "{\"Version\":\"2012-10-17\",\"Statement\":[{\"Sid\":\"\",\"Effect\":\"Allow\",\"Principal\":{\"AWS\":\"arn:aws:iam::861229788715:root\"},\"Action\":\"es:*\",\"Resource\":\"arn:aws:es:us-east-1:861229788715:domain/dss-index-dev/*\"},{\"Sid\":\"\",\"Effect\":\"Allow\",\"Principal\":{\"AWS\":\"*\"},\"Action\":\"es:*\",\"Resource\":\"arn:aws:es:us-east-1:861229788715:domain/dss-index-dev/*\",\"Condition\":{\"IpAddress\":{\"aws:SourceIp\":[\"98.210.239.128\",\"73.92.146.41\",\"73.70.203.63\",\"73.189.30.198\",\"73.170.144.7\",\"69.173.127.229\",\"67.169.145.190\",\"64.71.0.146\",\"193.63.223.21\",\"189.243.139.25\",\"169.233.212.39\",\"169.233.211.173\",\"128.114.59.206\",\"128.114.59.236\",\"128.114.59.229\",\"128.114.59.219\",\"128.114.59.214\",\"128.114.59.210\",\"128.114.59.208\",\"128.114.59.195\",\"128.114.59.189\",\"128.114.59.183\",\"128.114.59.161\",\"128.114.59.155\",\"128.114.59.150\",\"128.114.59.149\",\"12.31.108.106\"]}}}]}",
+        "SnapshotOptions": {
+            "AutomatedSnapshotStartHour": 23
+        },
+        "CognitoOptions": {
+            "Enabled": false
+        },
+        "EncryptionAtRestOptions": {
+            "Enabled": false
+        },
+        "NodeToNodeEncryptionOptions": {
+            "Enabled": false
+        },
+        "AdvancedOptions": {
+            "rest.action.multi.allow_explicit_index": "true"
+        },
+        "LogPublishingOptions": {
+            "ES_APPLICATION_LOGS": {
+                "CloudWatchLogsLogGroupArn": "arn:aws:logs:us-east-1:861229788715:log-group:/aws/aes/domains/dss-index-dev/es-application-dev-logs:*",
+                "Enabled": true
+            },
+            "INDEX_SLOW_LOGS": {
+                "CloudWatchLogsLogGroupArn": "arn:aws:logs:us-east-1:861229788715:log-group:/aws/aes/domains/dss-index-dev/es-index-dev-logs:*",
+                "Enabled": true
+            },
+            "SEARCH_SLOW_LOGS": {
+                "CloudWatchLogsLogGroupArn": "arn:aws:logs:us-east-1:861229788715:log-group:/aws/aes/domains/dss-index-dev/es-search-dev-logs:*",
+                "Enabled": true
+            }
+        },
+        "ServiceSoftwareOptions": {
+            "CurrentVersion": "R20180817-P1",
+            "NewVersion": "R20181023",
+            "UpdateAvailable": true,
+            "Cancellable": false,
+            "UpdateStatus": "ELIGIBLE",
+            "Description": "A newer release R20181023 is available. This release will be automatically deployed after Fri Mar 01 12:04:26 PST 2019",
+            "AutomatedUpdateDate": 1551470666.0
+        }
+    }
+}
+null
+cd dss-sync-sfn && domovoi deploy --stage dev
+Creating deployment package.
+Updating lambda function: dss-sync-sfn-dev
+Granting apigateway access to invoke Lambda function arn:aws:lambda:us-east-1:861229788715:function:dss-sync-sfn-dev
+Found existing permission grant statement domovoi-6c33e737, skipping
+Granting events access to invoke Lambda function arn:aws:lambda:us-east-1:861229788715:function:dss-sync-sfn-dev
+Found existing permission grant statement domovoi-6464aa99, skipping
+Granting sns access to invoke Lambda function arn:aws:lambda:us-east-1:861229788715:function:dss-sync-sfn-dev
+Found existing permission grant statement domovoi-595f3d00, skipping
+Granting sqs access to invoke Lambda function arn:aws:lambda:us-east-1:861229788715:function:dss-sync-sfn-dev
+Found existing permission grant statement domovoi-5efd67c2, skipping
+Granting s3 access to invoke Lambda function arn:aws:lambda:us-east-1:861229788715:function:dss-sync-sfn-dev
+Found existing permission grant statement domovoi-986eb2fe, skipping
+Granting logs access to invoke Lambda function arn:aws:lambda:us-east-1:861229788715:function:dss-sync-sfn-dev
+Found existing permission grant statement domovoi-58a946da, skipping
+Subscribing <function launch_from_forwarded_event at 0x7fba962006a8> to SQS queue dss-sync-dev
+Subscribing <function launch_from_s3_event at 0x7fba96200620> to events in S3 bucket org-humancellatlas-dss-dev
+Subscribed arn:aws:sqs:us-east-1:861229788715:domovoi-s3-events-org-humancellatlas-dss-dev-dss-sync-sfn-dev to sns.Subscription(arn='arn:aws:sns:us-east-1:861229788715:domovoi-s3-events-org-humancellatlas-dss-dev:771f3d7e-7b32-4f98-8156-2e6ce475b95e')
+Created event source mapping 955df82a-3bbf-466a-bfb5-cdb3a4745152
+Registering step function state machine for DispatchSync
+Registering step function state machine for Worker0
+Registering step function state machine for Worker1
+Registering step function state machine for Worker2
+Registering step function state machine for Worker3
+Registering step function state machine for Worker4
+Registering step function state machine for Worker5
+Registering step function state machine for Worker6
+Registering step function state machine for Worker7
+Registering step function state machine for CheckDeps
+Registering step function state machine for OneshotCopy
+Registering step function state machine for ComposeParts
+Created new state machine arn:aws:states:us-east-1:861229788715:stateMachine:dss-sync-sfn-dev
+State machine: arn:aws:states:us-east-1:861229788715:stateMachine:dss-sync-sfn-dev
+Completed 94 Bytes/94 Bytes (910 Bytes/s) with 1 file(s) remaining
+upload: ../tests/daemons/a47b90b2-0967-4fbf-87bc-c6c12db3fedf.2017-07-12T055120.037644Z to s3://org-humancellatlas-dss-dev/bundles/a47b90b2-0967-4fbf-87bc-c6c12db3fedf.2017-07-12T055120.037644Z
+��eSTART RequestId: 2ea712f1-3017-4b28-8a7c-f2c42b1aad54 Version: $LATEST
+Domovoi - INFO - Domovoi dispatch of event {'Records': [{'eventVersion': '2.0', 'eventSource': 'aws:s3', 'awsRegion': 'us-east-1', 'eventTime': '1970-01-01T00:00:00.000Z', 'eventName': 'ObjectCreated:Put', 'userIdentity': {'principalId': 'AIDAJDPLRKLG7UEXAMPLE'}, 'requestParameters': {'sourceIPAddress': '127.0.0.1'}, 'responseElements': {'x-amz-request-id': 'C3D13FE58DE4C810', 'x-amz-id-2': 'FMyUVURIY8/IgAtTv8xRjskZQpcIZ9KG4V5Wp6S7S/JRWeUWerMUE5JgHvANOjpD'}, 's3': {'s3SchemaVersion': '1.0', 'configurationId': 'testConfigRule', 'bucket': {'name': 'org-humancellatlas-dss-dev', 'ownerIdentity': {'principalId': 'A3NL1KOZZKExample'}, 'arn': 'arn:aws:s3:::org-humancellatlas-dss-dev'}, 'object': {'key': 'bundles/a47b90b2-0967-4fbf-87bc-c6c12db3fedf.2017-07-12T055120.037644Z', 'size': 94, 'eTag': 'afbb9e8a3032a50f90b579a0c6a410eb', 'versionId': '096fKKXTRTtl3on89fVO.nfljtsv6qko', 'sequencer': '0055AED6DCD90281E5'}}}]}
+Domovoi - INFO - {'org-humancellatlas-dss-dev/bundles/a47b90b2-0967-4fbf-87bc-c6c12db3fedf.2017-07-12T055120.037644Z:aws:gcp': 'arn:aws:states:us-east-1:861229788715:execution:dss-sync-sfn-dev:8bb99f5e-6f9d-4f4d-88d4-6aadbf8a4973'}
+END RequestId: 2ea712f1-3017-4b28-8a7c-f2c42b1aad54
+REPORT RequestId: 2ea712f1-3017-4b28-8a7c-f2c42b1aad54	Duration: 274.41 ms	Billed Duration: 300 ms 	Memory Size: 1536 MB	Max Memory Used: 68 MB	
+make[1]: *** [dss-sync-sfn] Error 1
+make: *** [deploy-daemons-serial] Error 2
+Makefile:32: recipe for target 'dss-sync-sfn' failed
+make[1]: Leaving directory '/home/hca_cicd/data-store/daemons'
+Makefile:71: recipe for target 'deploy-daemons-serial' failed
+ERROR: Job failed: command terminated with exit code 1
