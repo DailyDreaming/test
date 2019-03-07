@@ -2116,6 +2116,16 @@
               "$ref": "#/definitions/SearchResult"
             }
           },
+          "500": {
+            "description": "Handle asynchronously, downstream users are expected to retry later.",
+            "headers": {
+              "Retry-After": {
+                "description": "Delay in seconds, downstream users are expected to retry after the delay.",
+                "format": "int64",
+                "type": "integer"
+              }
+            }
+          },
           "default": {
             "description": "Unexpected error",
             "schema": {
