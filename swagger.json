@@ -1043,7 +1043,7 @@
               true,
               false
             ],
-            "in": "header",
+            "in": "query",
             "name": "retriable_post",
             "required": false,
             "default": false,
@@ -2049,7 +2049,7 @@
               true,
               false
             ],
-            "in": "header",
+            "in": "query",
             "name": "retriable_post",
             "required": false,
             "default": true,
