@@ -6,7 +6,7 @@ assert len(sys.argv) >= 2, usage
 file_list = sys.argv[1:]
 with open('final_timing_totals.txt', 'w') as w:
     for input_file in file_list:
-        if not os.path.exist(input_file):
+        if not os.path.exists(input_file):
             raise RuntimeError(f'{input_file} does not exist.  {usage}')
         with open(input_file, 'r') as r:
             w.write(r.read() + '\n')
