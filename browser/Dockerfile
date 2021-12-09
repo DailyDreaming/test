@@ -28,7 +28,6 @@
 #        https://github.com/DataBiosphere/terra-docker/blob/master/terra-jupyter-base/Dockerfile
 #
 #  - Terra only currently has support for: docker.io or gcr.io, so upload there (docker.io is free)
-#
 FROM ubuntu:18.04
 
 ENV DEBIAN_FRONTEND=noninteractive
