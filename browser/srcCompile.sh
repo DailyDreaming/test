@@ -25,13 +25,6 @@ make install
 cd ..
 rm openssl-1.0.2a.tar.gz
 
-# get the kent src tree outside of this script now
-#if [ ! -d kent ]; then
-# downloadFile http://hgdownload.soe.ucsc.edu/admin/jksrc.zip > jksrc.zip
-# unzip jksrc.zip
-# rm -f jksrc.zip
-#fi
-
 # get samtools patched for UCSC and compile it
 cd $APACHEDIR/kent
 if [ ! -d samtabix ]; then
