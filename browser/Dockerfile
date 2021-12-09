@@ -7,13 +7,13 @@
 # To build this image, run:
 #
 #   docker login
-#   docker build . -t {docker_username}/{tag_key}:{tag_value}
+#   docker build . -t {docker_username}/{tag_key}:{tag_value} 2>&1 | tee docker-build.log
 #   docker push {docker_username}/{tag_key}:{tag_value}
 #
 # For example:
 #
 #   docker login
-#   docker build . -t dailydreaming/genome_browser:latest
+#   docker build . -t dailydreaming/genome_browser:latest 2>&1 | tee docker-build.log
 #   docker push dailydreaming/genome_browser:latest
 #
 # Then, to run the Genome Browser (running locally on Ubuntu 18.04):
@@ -45,12 +45,11 @@ RUN apt-get install -y apache2 mariadb-server python-mysqldb libmariadbclient-de
 
 RUN cd $APACHEDIR && git clone git://genome-source.soe.ucsc.edu/kent.git
 ADD makefile ${APACHEDIR}/kent/src/makefile
+ADD makefile.hubCheck ${APACHEDIR}/kent/src/hg/utils/hubCheck/makefile
 
 ADD srcCompile.sh /tmp/srcCompile.sh
 RUN bash /tmp/srcCompile.sh
 
-#RUN git clone git://genome-source.soe.ucsc.edu/kent.git && cd kent && git checkout -t -b beta origin/beta && cd src && make -j 4 cgi-alpha
-
 EXPOSE 3306 33060 8000 8001 80 443 3333 873
 
-ENTRYPOINT ["bash"]
+ENTRYPOINT ["sh", "-c", "/etc/init.d/mysql start; apachectl -D FOREGROUND"]
