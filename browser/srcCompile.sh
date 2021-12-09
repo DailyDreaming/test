@@ -36,22 +36,27 @@ rm openssl-1.0.2a.tar.gz
 cd $APACHEDIR/kent
 if [ ! -d samtabix ]; then
  git clone http://genome-source.soe.ucsc.edu/samtabix.git
-else
- cd samtabix
- git pull
- cd ..
 fi
-
 cd samtabix
+git pull
 make
-
-find -type f -iname libmysqlclient.a*
 
 # compile the genome browser CGIs
 cd $APACHEDIR/kent
 git checkout beta
 cd $APACHEDIR/kent/src
+make clean
 make libs
-make cgi-beta
-cd hg/dbTrash
+# create jkweb.a
+cd kent/src/lib
 make
+# create stringify utility required by some makefiles
+cd kent/src/utils/stringify
+make
+# create pslCDnaFilter utility program
+cd kent/src/hg/pslCDnaFilter
+make
+
+cd hg
+make compile
+make install DESTDIR=

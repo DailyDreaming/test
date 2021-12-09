@@ -33,6 +33,7 @@ FROM ubuntu:18.04
 
 ENV DEBIAN_FRONTEND=noninteractive
 ENV APACHEDIR=/usr/local/apache
+ENV MACHTYPE=x86_64
 
 RUN apt-get update && apt-get -y upgrade
 RUN apt-get install -y libssl-dev python3-dev python-dev git zip unzip wget build-essential apt-transport-https curl cmake rsync libpcap-dev libpng-dev ghostscript gmt r-base uuid-dev
