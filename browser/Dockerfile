@@ -7,7 +7,7 @@
 # To build this image, run:
 #
 #   docker login
-#   docker build . -t {docker_username}/{tag_key}:{tag_value} 2>&1 | tee docker-build.log
+#   docker build . -t {docker_username}/{tag_key}:{tag_value}
 #   docker push {docker_username}/{tag_key}:{tag_value}
 #
 # For example:
@@ -18,7 +18,7 @@
 #
 # Then, to run the Genome Browser (running locally on Ubuntu 18.04):
 #
-# docker run -p 8000:8000 --entrypoint /bin/bash dailydreaming/genome_browser:latest -c '/etc/init.d/mysql start && apachectl -D FOREGROUND'
+# docker run -p 80:80 dailydreaming/browser:latest
 #
 # Go to 127.0.0.1:8000 in a web browser and you should see the Genome Browser.
 #
