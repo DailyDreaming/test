@@ -35,21 +35,19 @@ git pull
 make
 
 # compile the genome browser CGIs
-cd $APACHEDIR/kent
-git checkout beta
 cd $APACHEDIR/kent/src
 make clean
 make libs
 # create jkweb.a
-cd kent/src/lib
+cd $APACHEDIR/kent/src/lib
 make
 # create stringify utility required by some makefiles
-cd kent/src/utils/stringify
+cd $APACHEDIR/kent/src/utils/stringify
 make
 # create pslCDnaFilter utility program
-cd kent/src/hg/pslCDnaFilter
+cd $APACHEDIR/kent/src/hg/pslCDnaFilter
 make
 
-cd hg
+cd $APACHEDIR/kent/src/hg
 make compile
 make install DESTDIR=

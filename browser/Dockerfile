@@ -43,8 +43,10 @@ RUN bash /tmp/browserSetup.sh -b install; exit 0
 RUN apt-get install -y apache2 mariadb-server python-mysqldb libmariadbclient-dev
 
 RUN cd $APACHEDIR && git clone git://genome-source.soe.ucsc.edu/kent.git
+RUN cd $APACHEDIR/kent && git checkout beta
 ADD makefile ${APACHEDIR}/kent/src/makefile
 ADD makefile.hubCheck ${APACHEDIR}/kent/src/hg/utils/hubCheck/makefile
+ADD customFactory.c ${APACHEDIR}/kent/src/hg/lib/customFactory.c
 
 ADD srcCompile.sh /tmp/srcCompile.sh
 RUN bash /tmp/srcCompile.sh
