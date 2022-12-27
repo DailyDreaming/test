@@ -1,0 +1,12 @@
+name: genome-browser
+author: Lon Blauvelt (UCSC)
+description: |
+  Genome Browser
+version: 0.0.7
+services:
+  ucsc-gb:
+    image: "dailydreaming/genome_browser:x.2"
+    port: 8001
+    pdMountPath: "/data"
+    pdAccessMode: "ReadWriteOnce"
+    environment: {}
