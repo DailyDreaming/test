@@ -1,8 +1,8 @@
-name: ucsc-genome-browser
-author: UCSC 
+name: genome-browser
+author: Lon Blauvelt (UCSC)
 description: |
-  UCSC Genome Browser
-version: 0.0.1
+  Genome Browser
+version: 0.0.7
 services:
   ucsc-gb:
     image: "dailydreaming/genome_browser:x.2"
