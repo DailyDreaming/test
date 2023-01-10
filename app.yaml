@@ -10,6 +10,6 @@ services:
     pdMountPath: "/data"
     pdAccessMode: "ReadWriteOnce"
     environment:
-      WORKSPACE_NAME: "DRS-Test-Workspace"
-      WORKSPACE_NAMESPACE: "drs-billing-project"
-      GOOGLE_PROJECT: "drs-billing-project"
+      WORKSPACE_NAME: "terra-notebook-utils-tests"
+      WORKSPACE_NAMESPACE: "firecloud-cgl"
+      GOOGLE_PROJECT: "firecloud-cgl"
