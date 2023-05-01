@@ -5,7 +5,7 @@ description: |
 version: 0.0.16
 services:
   ucsc-gb:
-    image: "gcr.io/platform-dev-178517/ucsc-genome-browser:0.1"
+    image: "gcr.io/platform-dev-178517/ucsc-genome-browser:dev"
     port: 8001
     pdMountPath: "/data"
     pdAccessMode: "ReadWriteOnce"
