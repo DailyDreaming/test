@@ -2,7 +2,7 @@ name: genome-browser
 author: Lon Blauvelt (UCSC)
 description: |
   Genome Browser
-version: 0.0.16
+version: 0.0.17
 services:
   ucsc-gb:
     image: "gcr.io/platform-dev-178517/ucsc-genome-browser:dev"
