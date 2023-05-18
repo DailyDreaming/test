@@ -9,3 +9,7 @@ services:
     port: 8001
     pdMountPath: "/data"
     pdAccessMode: "ReadWriteOnce"
+    environment:
+      WORKSPACE_NAME: "neotope"
+      WORKSPACE_NAMESPACE: "anvil-ucscgi-cgp-dev-BP"
+      GOOGLE_PROJECT: "terra-quality-91952888"
