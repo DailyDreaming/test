@@ -10,6 +10,6 @@ services:
     pdMountPath: "/data"
     pdAccessMode: "ReadWriteOnce"
     environment:
-      WORKSPACE_NAME: "sandtimespace"
-      WORKSPACE_NAMESPACE: "anvil-ucscgi-cgp-dev-BP"
-      GOOGLE_PROJECT: "terra-quality-5b7a95ec"
+      WORKSPACE_NAME: "lon-gb"
+      WORKSPACE_NAMESPACE: "anvil-stage-demo"
+      GOOGLE_PROJECT: "terra-cf3e431c"
