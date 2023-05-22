@@ -1,0 +1,15 @@
+name: genome-browser
+author: Lon Blauvelt (UCSC)
+description: |
+  Genome Browser
+version: 0.0.17
+services:
+  ucsc-gb:
+    image: "gcr.io/platform-dev-178517/ucsc-genome-browser:dev"
+    port: 8001
+    pdMountPath: "/data"
+    pdAccessMode: "ReadWriteOnce"
+    environment:
+      WORKSPACE_NAME: "lon-gb"
+      WORKSPACE_NAMESPACE: "anvil-stage-demo"
+      GOOGLE_PROJECT: "terra-cf3e431c"
