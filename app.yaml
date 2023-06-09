@@ -10,6 +10,6 @@ services:
     pdMountPath: "/data"
     pdAccessMode: "ReadWriteOnce"
     environment:
-      WORKSPACE_NAME: "bako"
+      WORKSPACE_NAME: "baobab"
       WORKSPACE_NAMESPACE: "anvil-ucscgi-cgp-dev-BP"
-      GOOGLE_PROJECT: "terra-quality-0f8b079b"
+      GOOGLE_PROJECT: "terra-quality-5e84244f"
