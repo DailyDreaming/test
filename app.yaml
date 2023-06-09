@@ -5,11 +5,11 @@ description: |
 version: 0.0.17
 services:
   ucsc-gb:
-    image: "gcr.io/platform-dev-178517/ucsc-genome-browser:dev"
+    image: "gcr.io/platform-dev-178517/ucsc-genome-browser:no-min-no-tnu"
     port: 8001
     pdMountPath: "/data"
     pdAccessMode: "ReadWriteOnce"
     environment:
-      WORKSPACE_NAME: "baobab"
+      WORKSPACE_NAME: "delta"
       WORKSPACE_NAMESPACE: "anvil-ucscgi-cgp-dev-BP"
-      GOOGLE_PROJECT: "terra-quality-5e84244f"
+      GOOGLE_PROJECT: "terra-quality-28d1bc5c"
