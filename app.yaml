@@ -10,6 +10,6 @@ services:
     pdMountPath: "/data"
     pdAccessMode: "ReadWriteOnce"
     environment:
-      WORKSPACE_NAME: "delta"
+      WORKSPACE_NAME: "unpop"
       WORKSPACE_NAMESPACE: "anvil-ucscgi-cgp-dev-BP"
-      GOOGLE_PROJECT: "terra-quality-28d1bc5c"
+      GOOGLE_PROJECT: "terra-quality-78d1e722"
