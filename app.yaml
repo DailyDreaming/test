@@ -5,11 +5,11 @@ description: |
 version: 0.0.17
 services:
   ucsc-gb:
-    image: "gcr.io/platform-dev-178517/ucsc-genome-browser:no-min-no-tnu"
+    image: "gcr.io/platform-dev-178517/ucsc-genome-browser:dev"
     port: 8001
     pdMountPath: "/data"
     pdAccessMode: "ReadWriteOnce"
     environment:
-      WORKSPACE_NAME: "pop"
+      WORKSPACE_NAME: "neopop"
       WORKSPACE_NAMESPACE: "anvil-ucscgi-cgp-dev-BP"
-      GOOGLE_PROJECT: "terra-quality-e4550967"
+      GOOGLE_PROJECT: "terra-quality-79729257"
