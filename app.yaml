@@ -10,6 +10,6 @@ services:
     pdMountPath: "/data"
     pdAccessMode: "ReadWriteOnce"
     environment:
-      WORKSPACE_NAME: "neopop"
-      WORKSPACE_NAMESPACE: "anvil-ucscgi-cgp-dev-BP"
-      GOOGLE_PROJECT: "terra-quality-79729257"
+      WORKSPACE_NAME: "lon-gb"
+      WORKSPACE_NAMESPACE: "anvil-stage-demo"
+      GOOGLE_PROJECT: "terra-cf3e431c"
