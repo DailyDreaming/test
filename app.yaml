@@ -9,7 +9,3 @@ services:
     port: 8001
     pdMountPath: "/data"
     pdAccessMode: "ReadWriteOnce"
-    environment:
-      WORKSPACE_NAME: "gblogging"
-      WORKSPACE_NAMESPACE: "anvil-stage-demo"
-      GOOGLE_PROJECT: "terra-749cf460"
